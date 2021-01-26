@@ -13,17 +13,23 @@ class LootboxExtension : Extension() {
 
     override fun terminate() {
         logger.info("[ExampleExtension] has been disabled!")
+        saveCrates()
     }
     companion object {
         private val lootboxesFile = File("./lootboxes/")
+        val crates = loadCrates()
 
-        val crates: Array<LootCrate>
-        get() {
+        private fun loadCrates(): MutableList<LootCrate> {
             val boxesList = mutableListOf<LootCrate>()
             if (lootboxesFile.listFiles() == null) lootboxesFile.mkdirs()
             lootboxesFile.listFiles()?.forEach { boxesList.add(Json.decodeFromString(LootCrate.serializer(), it.readText())) }
 
-            return boxesList.toTypedArray()
+            return boxesList
+        }
+
+        private fun saveCrates() = crates.forEach {
+            val crateFile = File(lootboxesFile,"${it.name}.json")
+            crateFile.writeText(Json.encodeToString(LootCrate.serializer(), it))
         }
     }
 
