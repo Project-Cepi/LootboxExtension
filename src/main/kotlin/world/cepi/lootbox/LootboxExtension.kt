@@ -1,8 +1,8 @@
-package world.cepi.example
+package world.cepi.lootbox
 
 import net.minestom.server.extensions.Extension;
 
-class ExampleExtension : Extension() {
+class LootboxExtension : Extension() {
 
     override fun initialize() {
         logger.info("[ExampleExtension] has been enabled!")
