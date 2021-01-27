@@ -1,5 +1,5 @@
 {
-  "entrypoint": "world.cepi.example.ExampleExtension",
-  "name": "ExampleExtension",
+  "entrypoint": "world.cepi.crates.LootboxExtension",
+  "name": "CratesExtension",
   "version": "1.0.0-EXAMPLE"
 }

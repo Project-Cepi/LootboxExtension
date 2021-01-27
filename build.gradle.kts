@@ -1,6 +1,7 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.4.21-2"
     kotlin("plugin.serialization") version "1.4.21"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     maven
@@ -8,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a jar
     java
     id("org.jetbrains.dokka") version "1.4.20"
+    kotlin("jvm") version "1.4.21-2"
 }
 
 repositories {
@@ -35,9 +37,6 @@ dependencies {
     // Compile Minestom into project
     compileOnly("com.github.Minestom:Minestom:-SNAPSHOT")
 
-    // OkHttp
-    compileOnly("com.squareup.okhttp3", "okhttp", "4.9.0")
-
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 }
@@ -48,7 +47,7 @@ tasks.withType<Test> {
 
 tasks {
     named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-        archiveBaseName.set("example")
+        archiveBaseName.set("crates-extension")
         mergeServiceFiles()
         minimize()
 
