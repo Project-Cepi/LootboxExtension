@@ -14,6 +14,6 @@ data class LootCrate(
     data class LootCrateEntry(
         val namespace: String,
         val count: Int,
-        val chance: Float
+        val chance: Int
     )
 }

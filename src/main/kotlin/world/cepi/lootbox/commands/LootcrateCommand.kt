@@ -50,7 +50,7 @@ class LootcrateCommand : Command("lootcrate") {
             crate.entries.add(LootCrate.LootCrateEntry(
                 namespace = stack.material.name,
                 count = stack.amount.toInt(),
-                chance = args.getInteger("chance").toFloat() / 100
+                chance = args.getInteger("chance")
             ))
             LootboxExtension.crates.removeIf { it.name == name }
             LootboxExtension.crates.add(crate)
