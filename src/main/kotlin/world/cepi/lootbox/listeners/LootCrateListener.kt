@@ -26,5 +26,6 @@ fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
         ))
     }
 
-
+    val playerXp = event.player.exp + (loot.minXp..loot.maxXp).random()
+    event.player.exp = playerXp
 }

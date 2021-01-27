@@ -8,7 +8,9 @@ import java.util.*
 @Serializable
 data class LootCrate(
     val name: String,
-    val entries: MutableList<LootCrateEntry>
+    val entries: MutableList<LootCrateEntry>,
+    var minXp: Int = 0,
+    var maxXp: Int = 0
 ) {
     @Serializable
     data class LootCrateEntry(

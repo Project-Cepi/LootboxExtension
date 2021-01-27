@@ -19,6 +19,7 @@ import world.cepi.lootbox.model.LootCrate
 class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")
     private val chance: ArgumentInteger = ArgumentType.Integer("chance")
+    private val xp = ArgumentType.IntRange("xp")
 
     private val create = ArgumentType.Word("create").from("create")
     private val add = ArgumentType.Word("create").from("add")
@@ -79,5 +80,20 @@ class LootcrateCommand : Command("lootcrate") {
             sender.inventory.addItemStack(barrel)
 
         }, get, name)
+
+        addSyntax({sender: CommandSender, args: Arguments ->
+            val name = args.getWord("name")
+            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
+            if (crate == null) {
+                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
+                return@addSyntax
+            }
+
+            val xpRange = args.getIntRange("xp")
+            crate.minXp = xpRange.minimum
+            crate.maxXp = xpRange.maximum
+
+
+        })
     }
 }
