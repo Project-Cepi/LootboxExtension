@@ -1,4 +1,4 @@
-package world.cepi.lootbox.commands
+package world.cepi.crates.commands
 
 import net.minestom.server.chat.ChatColor
 import net.minestom.server.chat.ColoredText
@@ -7,14 +7,13 @@ import net.minestom.server.command.builder.Arguments
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.arguments.ArgumentWord
-import net.minestom.server.command.builder.arguments.minecraft.ArgumentIntRange
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
-import world.cepi.lootbox.LootboxExtension
-import world.cepi.lootbox.model.LootCrate
+import world.cepi.crates.LootboxExtension
+import world.cepi.crates.model.LootCrate
 
 class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")

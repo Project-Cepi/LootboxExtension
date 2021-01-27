@@ -1,9 +1,6 @@
-package world.cepi.lootbox.model
+package world.cepi.crates.model
 
 import kotlinx.serialization.Serializable
-import net.minestom.server.item.ItemStack
-import net.minestom.server.item.Material
-import java.util.*
 
 @Serializable
 data class LootCrate(

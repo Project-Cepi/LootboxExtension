@@ -1,2 +1,2 @@
-rootProject.name = "LootboxExtension"
+rootProject.name = "CratesExtension"
 

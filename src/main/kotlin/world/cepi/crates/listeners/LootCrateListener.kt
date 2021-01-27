@@ -1,12 +1,11 @@
-package world.cepi.lootbox.listeners
+package world.cepi.crates.listeners
 
 import net.minestom.server.data.DataImpl
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
-import world.cepi.lootbox.getMaterialFromRegistryName
-import world.cepi.lootbox.model.LootCrate
-import kotlin.random.Random
+import world.cepi.crates.getMaterialFromRegistryName
+import world.cepi.crates.model.LootCrate
 
 fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
     val instance = event.player.instance

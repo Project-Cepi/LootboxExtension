@@ -1,9 +1,9 @@
-package world.cepi.lootbox
+package world.cepi.crates
 
 import kotlinx.serialization.json.Json
 import net.minestom.server.extensions.Extension;
 import net.minestom.server.item.Material
-import world.cepi.lootbox.model.LootCrate
+import world.cepi.crates.model.LootCrate
 import java.io.File
 
 class LootboxExtension : Extension() {

@@ -1,4 +1,4 @@
-package world.cepi.lootbox.listeners
+package world.cepi.crates.listeners
 
 import net.minestom.server.data.DataImpl
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
