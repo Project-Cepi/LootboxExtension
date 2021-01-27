@@ -26,6 +26,10 @@ class LootcrateCommand : Command("lootcrate") {
 
     init {
 
+        setDefaultExecutor { sender, args ->
+            sender.sendMessage(ColoredText.of(ChatColor.RED, "Usage: /lootboxes create|add|get <args>"))
+        }
+
         addSyntax({sender: CommandSender, args: Arguments ->
             val crate = LootboxExtension.crates.firstOrNull { it.name == args.getString("name") }
             if (crate != null) sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate already exists!"))
