@@ -20,11 +20,12 @@ class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")
     private val chance: ArgumentInteger = ArgumentType.Integer("chance")
     private val xp = ArgumentType.IntRange("xp")
-    private val reward = ArgumentType.DynamicWord("reward").fromRestrictions {restriction -> Reward.values().forEach { if (it.name == restriction) return@fromRestrictions true}; return@fromRestrictions false }
+    private val rewardType = ArgumentType.DynamicWord("reward").fromRestrictions {restriction -> Reward.values().forEach { if (it.name == restriction) return@fromRestrictions true}; return@fromRestrictions false }
 
     private val create = ArgumentType.Word("create").from("create")
     private val add = ArgumentType.Word("create").from("add")
     private val get = ArgumentType.Word("get").from("get")
+    private val reward = ArgumentType.Word("rewardCommand").from("reward")
 
     init {
         setDefaultExecutor { sender, args ->
@@ -96,7 +97,7 @@ class LootcrateCommand : Command("lootcrate") {
             val xpRange = args.getIntRange("xp")
             crate.minXp = xpRange.minimum
             crate.maxXp = xpRange.maximum
-        })
+        }, name, xp)
 
         addSyntax({sender: CommandSender, args: Arguments ->
             val name = args.getWord("name")
@@ -111,6 +112,6 @@ class LootcrateCommand : Command("lootcrate") {
             LootboxExtension.crates.add(crate)
 
             sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Set crate reward!"))
-        })
+        }, reward, name, rewardType)
     }
 }
