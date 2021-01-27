@@ -25,7 +25,6 @@ class LootcrateCommand : Command("lootcrate") {
     private val get = ArgumentType.Word("get").from("get")
 
     init {
-
         setDefaultExecutor { sender, args ->
             sender.sendMessage(ColoredText.of(ChatColor.RED, "Usage: /lootboxes create|add|get <args>"))
         }
