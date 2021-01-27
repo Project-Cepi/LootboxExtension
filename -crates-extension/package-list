@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+world.cepi.crates
+world.cepi.crates.commands
+world.cepi.crates.listeners
+world.cepi.crates.model
+
