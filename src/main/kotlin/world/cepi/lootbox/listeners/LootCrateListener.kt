@@ -1,0 +1,30 @@
+package world.cepi.lootbox.listeners
+
+import net.minestom.server.data.DataImpl
+import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
+import net.minestom.server.instance.block.Block
+import net.minestom.server.item.ItemStack
+import world.cepi.lootbox.getMaterialFromRegistryName
+import world.cepi.lootbox.model.LootCrate
+import kotlin.random.Random
+
+fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
+    val instance = event.player.instance
+    val block = instance?.getBlock(event.position)
+    val blockData = instance?.getBlockData(event.position) ?: DataImpl()
+
+    if (block != Block.BARREL || !blockData.hasKey("loot")) return
+
+    val loot = blockData.get<LootCrate>("loot") ?: return
+
+    loot.entries.forEach {
+        val dropChance = (0..100).random()
+
+        if (dropChance in (0..it.chance)) event.player.inventory.addItemStack(ItemStack(
+            getMaterialFromRegistryName(it.namespace)!!,
+            it.count.toByte()
+        ))
+    }
+
+
+}

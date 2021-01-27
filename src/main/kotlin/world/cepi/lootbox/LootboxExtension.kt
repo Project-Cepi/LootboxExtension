@@ -2,6 +2,7 @@ package world.cepi.lootbox
 
 import kotlinx.serialization.json.Json
 import net.minestom.server.extensions.Extension;
+import net.minestom.server.item.Material
 import world.cepi.lootbox.model.LootCrate
 import java.io.File
 
@@ -33,4 +34,9 @@ class LootboxExtension : Extension() {
         }
     }
 
+}
+
+fun getMaterialFromRegistryName(registryName: String): Material? {
+    Material.values().forEach { if (it.name == registryName) return it}
+    return null
 }
