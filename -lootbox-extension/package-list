@@ -3,5 +3,6 @@ $dokka.linkExtension:html
 
 world.cepi.lootbox
 world.cepi.lootbox.commands
+world.cepi.lootbox.listeners
 world.cepi.lootbox.model
 
