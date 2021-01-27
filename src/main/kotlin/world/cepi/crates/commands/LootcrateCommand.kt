@@ -14,11 +14,13 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
+import world.cepi.crates.model.Reward
 
 class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")
     private val chance: ArgumentInteger = ArgumentType.Integer("chance")
     private val xp = ArgumentType.IntRange("xp")
+    private val reward = ArgumentType.DynamicWord("reward").fromRestrictions {restriction -> Reward.values().forEach { if (it.name == restriction) return@fromRestrictions true}; return@fromRestrictions false }
 
     private val create = ArgumentType.Word("create").from("create")
     private val add = ArgumentType.Word("create").from("add")
@@ -94,8 +96,21 @@ class LootcrateCommand : Command("lootcrate") {
             val xpRange = args.getIntRange("xp")
             crate.minXp = xpRange.minimum
             crate.maxXp = xpRange.maximum
+        })
 
+        addSyntax({sender: CommandSender, args: Arguments ->
+            val name = args.getWord("name")
+            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
+            if (crate == null) {
+                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
+                return@addSyntax
+            }
+            crate.reward = Reward.valueOf(args.getWord("reward").toUpperCase())
 
+            LootboxExtension.crates.removeIf { it.name == name }
+            LootboxExtension.crates.add(crate)
+
+            sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Set crate reward!"))
         })
     }
 }
