@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.extensions.Extension;
 import net.minestom.server.item.Material
+import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.listeners.lootCrateListener
 import world.cepi.crates.listeners.onBlockPlace
 import world.cepi.crates.model.LootCrate
@@ -14,11 +15,13 @@ import java.io.File
 class LootboxExtension : Extension() {
 
     override fun initialize() {
-        logger.info("[ExampleExtension] has been enabled!")
+        logger.info("[CratesExtension] has been enabled!")
         val eventManager = MinecraftServer.getGlobalEventHandler()
 
         eventManager.addEventCallback(PlayerUseItemOnBlockEvent::class.java, ::lootCrateListener)
         eventManager.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
+
+        MinecraftServer.getCommandManager().register(LootcrateCommand())
     }
 
     override fun terminate() {
