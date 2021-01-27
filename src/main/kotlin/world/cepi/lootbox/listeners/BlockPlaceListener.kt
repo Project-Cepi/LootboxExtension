@@ -6,7 +6,7 @@ import net.minestom.server.instance.block.Block
 
 fun onBlockPlace(event: PlayerBlockPlaceEvent) {
     val block = event.player.instance?.getBlock(event.blockPosition)
-    val data = event.player.itemInMainHand.data ?: DataImpl()
+    val data = event.player.getItemInHand(event.hand).data ?: DataImpl()
 
     if (block == Block.BARREL && data.hasKey("loot")) event.blockData = data
 }
