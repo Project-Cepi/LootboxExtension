@@ -4,15 +4,20 @@ import net.minestom.server.data.DataImpl
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent
 import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
+import world.cepi.crates.LootboxExtension
 import world.cepi.crates.getMaterialFromRegistryName
 import world.cepi.crates.model.LootCrate
 
 fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
+    event.player.sendMessage("Called PlayerUseBlockItemEvent")
+
     val instance = event.player.instance
     val block = instance?.getBlock(event.position)
     val blockData = instance?.getBlockData(event.position) ?: DataImpl()
 
-    if (block != Block.BARREL || !blockData.hasKey("loot")) return
+    if (block != Block.BARREL || !blockData.hasKey("loot")) {
+        event.player.sendMessage("This block does not have loot associated with it")
+    }
 
     val loot = blockData.get<LootCrate>("loot") ?: return
 

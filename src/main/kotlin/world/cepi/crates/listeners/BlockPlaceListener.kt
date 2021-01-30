@@ -8,5 +8,8 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) {
     val block = event.player.instance?.getBlock(event.blockPosition)
     val data = event.player.getItemInHand(event.hand).data ?: DataImpl()
 
-    if (block == Block.BARREL && data.hasKey("loot")) event.blockData = data
+    if (block == Block.BARREL && data.hasKey("loot")) {
+        event.blockData = data
+        event.player.sendMessage("Copied data over to barrel")
+    }
 }
