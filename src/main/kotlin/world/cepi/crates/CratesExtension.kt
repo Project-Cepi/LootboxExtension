@@ -19,22 +19,20 @@ class LootboxExtension : Extension() {
     override fun initialize() {
         LOGGER = logger
 
-        logger.info("[CratesExtension] has been enabled!")
         val eventManager = MinecraftServer.getGlobalEventHandler()
 
         eventManager.addEventCallback(PlayerUseItemOnBlockEvent::class.java, ::lootCrateListener)
         eventManager.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
 
-        eventManager.addEventCallback(PlayerLoginEvent::class.java) {event ->
-            event.player.sendMessage("You're logged in!")
-        }
-
         MinecraftServer.getCommandManager().register(LootcrateCommand())
+
+        logger.info("[CratesExtension] has been enabled!")
     }
 
     override fun terminate() {
-        logger.info("[ExampleExtension] has been disabled!")
         saveCrates()
+
+        logger.info("[ExampleExtension] has been disabled!")
     }
     companion object {
         private val lootboxesFile = File("./lootboxes/")

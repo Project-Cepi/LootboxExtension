@@ -15,10 +15,6 @@ fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
     val block = instance?.getBlock(event.position)
     val blockData = instance?.getBlockData(event.position) ?: DataImpl()
 
-    if (block != Block.BARREL || !blockData.hasKey("loot")) {
-        event.player.sendMessage("This block does not have loot associated with it")
-    }
-
     val loot = blockData.get<LootCrate>("loot") ?: return
 
     loot.entries.forEach {
