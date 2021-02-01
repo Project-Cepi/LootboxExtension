@@ -39,6 +39,8 @@ dependencies {
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+
+    compileOnly("com.github.Project-Cepi", "Kstom", "5f2df98")
 }
 
 tasks.withType<Test> {
@@ -47,6 +49,7 @@ tasks.withType<Test> {
 
 tasks.shadowJar {
     exclude("net.minestom.*")
+    exclude("world.cepi.kstom")
 }
 
 tasks {
