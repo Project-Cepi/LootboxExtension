@@ -40,12 +40,7 @@ class LootcrateCommand : Command("lootcrate") {
         }, create, name)
 
         addSyntax({sender: CommandSender, args: Arguments ->
-            val name = args.getWord("name")
-            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
-            if (crate == null) {
-                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
-                return@addSyntax
-            }
+            val crate = getCrate(sender, args) ?: return@addSyntax
             if (sender !is Player) {
                 sender.sendMessage(ColoredText.of(ChatColor.RED, "Please only run this command as a player"))
                 return@addSyntax
@@ -57,19 +52,13 @@ class LootcrateCommand : Command("lootcrate") {
                 count = stack.amount.toInt(),
                 chance = args.getInteger("chance")
             ))
-            LootboxExtension.crates.removeIf { it.name == name }
-            LootboxExtension.crates.add(crate)
+            updateCrate(crate)
 
             sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Added item to crate!"))
         }, add, name, chance)
 
         addSyntax({sender: CommandSender, args: Arguments ->
-            val name = args.getWord("name")
-            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
-            if (crate == null) {
-                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
-                return@addSyntax
-            }
+            val crate = getCrate(sender, args)
             if (sender !is Player) {
                 sender.sendMessage(ColoredText.of(ChatColor.RED, "Please only run this command as a player"))
                 return@addSyntax
@@ -86,30 +75,36 @@ class LootcrateCommand : Command("lootcrate") {
         }, get, name)
 
         addSyntax({sender: CommandSender, args: Arguments ->
-            val name = args.getWord("name")
-            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
-            if (crate == null) {
-                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
-                return@addSyntax
-            }
+            val crate = getCrate(sender, args) ?: return@addSyntax
 
             val xpRange = args.getIntRange("xp")
             crate.minXp = xpRange.minimum
             crate.maxXp = xpRange.maximum
+
+            updateCrate(crate)
         }, name, xp)
 
         addSyntax({sender: CommandSender, args: Arguments ->
-            val name = args.getWord("name")
-            val crate = LootboxExtension.crates.firstOrNull { it.name == name }
-            if (crate == null) {
-                sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
-                return@addSyntax
-            }
+            val crate = getCrate(sender, args) ?: return@addSyntax
 
-            LootboxExtension.crates.removeIf { it.name == name }
-            LootboxExtension.crates.add(crate)
+            updateCrate(crate)
 
             sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Set crate reward!"))
         }, reward, name)
+    }
+
+    private fun getCrate(sender: CommandSender, args: Arguments): LootCrate? {
+        val name = args.getWord("name")
+        val crate = LootboxExtension.crates.firstOrNull { it.name == name }
+        if (crate == null) {
+            sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
+            return null
+        }
+        return crate
+    }
+
+    private fun updateCrate(crate: LootCrate) {
+        LootboxExtension.crates.removeIf { it.name == crate.name }
+        LootboxExtension.crates.add(crate)
     }
 }
