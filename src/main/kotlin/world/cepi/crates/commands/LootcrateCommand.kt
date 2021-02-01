@@ -20,7 +20,6 @@ class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")
     private val chance: ArgumentInteger = ArgumentType.Integer("chance")
     private val xp = ArgumentType.IntRange("xp")
-    private val rewardType = ArgumentType.DynamicWord("reward").fromRestrictions {restriction -> Reward.values().forEach { if (it.name == restriction) return@fromRestrictions true}; return@fromRestrictions false }
 
     private val create = ArgumentType.Word("create").from("create")
     private val add = ArgumentType.Word("create").from("add")
@@ -106,12 +105,11 @@ class LootcrateCommand : Command("lootcrate") {
                 sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
                 return@addSyntax
             }
-            crate.reward = Reward.valueOf(args.getWord("reward").toUpperCase())
 
             LootboxExtension.crates.removeIf { it.name == name }
             LootboxExtension.crates.add(crate)
 
             sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Set crate reward!"))
-        }, reward, name, rewardType)
+        }, reward, name)
     }
 }
