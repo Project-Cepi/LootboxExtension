@@ -35,7 +35,7 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:3026e46220")
+    implementation("com.github.Minestom:Minestom:dd1b67e5de")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
@@ -43,6 +43,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.shadowJar {
+    exclude("net.minestom.*")
 }
 
 tasks {
