@@ -5,6 +5,7 @@ import net.minestom.server.chat.ColoredText
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Arguments
 import net.minestom.server.command.builder.Command
+import net.minestom.server.command.builder.arguments.Argument
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.arguments.ArgumentWord
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger
@@ -15,16 +16,27 @@ import net.minestom.server.item.Material
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.model.Reward
+import world.cepi.crates.rewards.Rewards
+import world.cepi.crates.rewards.SimpleRewards
+import world.cepi.kstom.arguments.argumentFromClass
+import world.cepi.kstom.command.addSyntax
+import java.util.*
+import kotlin.reflect.KClass
+import kotlin.reflect.KType
+import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+import kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedType
 
 class LootcrateCommand : Command("lootcrate") {
     private val name: ArgumentWord = ArgumentType.Word("name")
     private val chance: ArgumentInteger = ArgumentType.Integer("chance")
     private val xp = ArgumentType.IntRange("xp")
+    private val rewardType = ArgumentType.Word("rewardType").from(*rewardNames)
 
     private val create = ArgumentType.Word("create").from("create")
     private val add = ArgumentType.Word("create").from("add")
     private val get = ArgumentType.Word("get").from("get")
-    private val reward = ArgumentType.Word("rewardCommand").from("reward")
+    private val rewardCommand = ArgumentType.Word("rewardCommand").from("reward")
 
     init {
         setDefaultExecutor { sender, args ->
@@ -84,13 +96,26 @@ class LootcrateCommand : Command("lootcrate") {
             updateCrate(crate)
         }, name, xp)
 
-        addSyntax({sender: CommandSender, args: Arguments ->
-            val crate = getCrate(sender, args) ?: return@addSyntax
+        Rewards.forEach { reward ->
+            val arguments = mutableListOf<Argument<*>>()
+            reward.primaryConstructor!!.parameters.forEach {
+                arguments.add(argumentFromClass(it.type as KClass<*>) ?: throw InvalidPropertiesFormatException("Arguments for a Reward must be simple datatypes"))
+            }
 
-            updateCrate(crate)
+            addSyntax({ sender: CommandSender, args: Arguments ->
+                val crate = getCrate(sender, args) ?: return@addSyntax
+                val constructorArgs = mutableListOf<Any>()
 
-            sender.sendMessage(ColoredText.of(ChatColor.BRIGHT_GREEN, "Set crate reward!"))
-        }, reward, name)
+                reward.primaryConstructor!!.parameters.forEach {
+                    val argAsType = it.type as KClass<*>
+                    constructorArgs.add(args.getObject(argAsType.simpleName!!))
+                }
+
+                crate.reward = reward.primaryConstructor!!.call(constructorArgs)
+                updateCrate(crate)
+
+            }, rewardCommand, name, rewardType, *arguments.toTypedArray())
+        }
     }
 
     private fun getCrate(sender: CommandSender, args: Arguments): LootCrate? {
@@ -106,5 +131,13 @@ class LootcrateCommand : Command("lootcrate") {
     private fun updateCrate(crate: LootCrate) {
         LootboxExtension.crates.removeIf { it.name == crate.name }
         LootboxExtension.crates.add(crate)
+    }
+
+    private val rewardNames: Array<String>
+    get() {
+        val names = mutableListOf<String>()
+        names.addAll(SimpleRewards.values().map { it.name })
+        names.addAll(Rewards.map { it.simpleName ?: "" })
+        return names.toTypedArray()
     }
 }
