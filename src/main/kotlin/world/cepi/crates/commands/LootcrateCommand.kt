@@ -12,7 +12,7 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
-import world.cepi.crates.rewards.Rewards
+import world.cepi.crates.rewards.Reward.Companion.Rewards
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
