@@ -7,4 +7,8 @@ import world.cepi.crates.rewards.Reward
 data class LootCrate(
     val name: String,
     val rewards: MutableList<Reward> = mutableListOf()
-)
+) {
+    companion object {
+        const val lootKey = "cepi-lootcrate"
+    }
+}

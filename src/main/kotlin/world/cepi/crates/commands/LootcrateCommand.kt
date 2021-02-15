@@ -53,7 +53,7 @@ class LootcrateCommand : Command("lootcrate") {
 
             val barrel = ItemStack(Material.BARREL, 1)
             val barrelData = DataImpl()
-            barrelData.set("loot", crate, LootCrate::class.java)
+            barrelData.set(LootCrate.lootKey, crate, LootCrate::class.java)
             barrel.data = barrelData
             barrel.displayName = ColoredText.of(ChatColor.GOLD, "Loot Crate")
 

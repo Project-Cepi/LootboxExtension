@@ -14,7 +14,7 @@ fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
     val instance = event.player.instance
     val blockData = instance?.getBlockData(event.position) ?: DataImpl()
 
-    val loot = blockData.get<LootCrate>("loot") ?: return
+    val loot = blockData.get<LootCrate>(LootCrate.lootKey) ?: return
 
     loot.rewards.forEach {
         it.dispatch(event.player)
