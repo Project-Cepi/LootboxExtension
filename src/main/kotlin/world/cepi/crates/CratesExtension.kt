@@ -32,7 +32,7 @@ class LootboxExtension : Extension() {
     override fun terminate() {
         saveCrates()
 
-        logger.info("[ExampleExtension] has been disabled!")
+        logger.info("[CratesExtension] has been disabled!")
     }
     companion object {
         private val lootboxesFile = File("./lootboxes/")

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     kotlin("plugin.serialization") version "1.4.21"
@@ -35,12 +33,13 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:dd1b67e5de")
+    compileOnly("com.github.Minestom:Minestom:437afc28ff")
+
+    // implement KStom
+    compileOnly("com.github.Project-Cepi:KStom:120c4c5475")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-
-    compileOnly("com.github.Project-Cepi", "Kstom", "5f2df98")
 }
 
 tasks.withType<Test> {

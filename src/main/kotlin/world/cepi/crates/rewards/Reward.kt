@@ -1,7 +1,7 @@
-package world.cepi.crates.model
+package world.cepi.crates.rewards
 
 import net.minestom.server.entity.Player
 
 fun interface Reward {
-    fun despatch(target: Player)
+    fun dispatch(target: Player)
 }

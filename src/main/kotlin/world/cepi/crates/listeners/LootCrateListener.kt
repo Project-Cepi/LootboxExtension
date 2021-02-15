@@ -12,22 +12,11 @@ fun lootCrateListener(event: PlayerUseItemOnBlockEvent) {
     event.player.sendMessage("Called PlayerUseBlockItemEvent")
 
     val instance = event.player.instance
-    val block = instance?.getBlock(event.position)
     val blockData = instance?.getBlockData(event.position) ?: DataImpl()
 
     val loot = blockData.get<LootCrate>("loot") ?: return
 
-    loot.entries.forEach {
-        val dropChance = (0..100).random()
-
-        if (dropChance in (0..it.chance)) event.player.inventory.addItemStack(ItemStack(
-            getMaterialFromRegistryName(it.namespace)!!,
-            it.count.toByte()
-        ))
+    loot.rewards.forEach {
+        it.dispatch(event.player)
     }
-
-    val playerXp = event.player.exp + (loot.minXp..loot.maxXp).random()
-    event.player.exp = playerXp
-
-    loot.reward.reward(event.player)
 }
