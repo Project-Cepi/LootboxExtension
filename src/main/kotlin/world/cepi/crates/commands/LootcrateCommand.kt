@@ -16,16 +16,14 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Rewards
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
-import java.util.*
-import kotlin.reflect.KClass
-import kotlin.reflect.full.primaryConstructor
-
 import world.cepi.kstom.command.arguments.asSubcommand
+import java.util.*
+import kotlin.reflect.full.primaryConstructor
 
 class LootcrateCommand : Command("lootcrate") {
 
     private val name: ArgumentWord = ArgumentType.Word("name")
-    private val rewardType = ArgumentType.Word("rewardType").from(*rewardNames)
+    private val rewardType = ArgumentType.Word("rewardType").from(*rewardNames.toTypedArray())
 
     private val create = "create".asSubcommand()
     private val get = "get".asSubcommand()
@@ -66,12 +64,7 @@ class LootcrateCommand : Command("lootcrate") {
 
             addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->
                 val crate = getCrate(sender, args) ?: return@addSyntax
-                val constructorArgs = mutableListOf<Any>()
-
-                reward.primaryConstructor!!.parameters.forEach {
-                    val argAsType = it.type as KClass<*>
-                    constructorArgs.add(args.getObject(argAsType.simpleName!!))
-                }
+                val constructorArgs: List<Any> = arguments.mapIndexed { index, _ -> args.get(arguments[index]) }
 
                 crate.rewards.add(reward.primaryConstructor!!.call(constructorArgs))
                 updateCrate(crate)
@@ -81,7 +74,7 @@ class LootcrateCommand : Command("lootcrate") {
     }
 
     private fun getCrate(sender: CommandSender, args: Arguments): LootCrate? {
-        val name = args.getWord("name")
+        val name = args.get(name)
         val crate = LootboxExtension.crates.firstOrNull { it.name == name }
         if (crate == null) {
             sender.sendMessage(ColoredText.of(ChatColor.RED, "That crate does not exist!"))
@@ -95,10 +88,7 @@ class LootcrateCommand : Command("lootcrate") {
         LootboxExtension.crates.add(crate)
     }
 
-    private val rewardNames: Array<String>
-    get() {
-        val names = mutableListOf<String>()
-        names.addAll(Rewards.map { it.simpleName ?: "" })
-        return names.toTypedArray()
-    }
+    private val rewardNames: List<String>
+        get() = Rewards.map { it.simpleName ?: "" }
+
 }
