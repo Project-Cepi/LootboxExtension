@@ -40,6 +40,9 @@ dependencies {
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+
+    // Add support for level rewards
+    compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 }
 
 tasks.withType<Test> {

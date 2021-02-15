@@ -6,7 +6,6 @@ import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Arguments
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
-import net.minestom.server.command.builder.arguments.ArgumentWord
 import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Player
 import net.minestom.server.item.ItemStack
@@ -22,7 +21,7 @@ import kotlin.reflect.full.primaryConstructor
 
 class LootcrateCommand : Command("lootcrate") {
 
-    private val name: ArgumentWord = ArgumentType.Word("name")
+    private val name = ArgumentType.Word("name")
     private val rewardType = ArgumentType.Word("rewardType").from(*rewardNames.toTypedArray())
 
     private val create = "create".asSubcommand()
