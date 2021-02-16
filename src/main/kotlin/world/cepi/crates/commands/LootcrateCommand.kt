@@ -39,7 +39,7 @@ class LootcrateCommand : Command("lootcrate") {
         }
 
         addSyntax(get, name) { sender, args ->
-            val crate = getCrate(sender, args)!!
+            val crate = getCrate(sender, args) ?: return@addSyntax
             if (sender !is Player) {
                 sender.sendMessage(ColoredText.of(ChatColor.RED, "Please only run this command as a player"))
                 return@addSyntax
@@ -54,11 +54,8 @@ class LootcrateCommand : Command("lootcrate") {
 
             addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->
                 val crate = getCrate(sender, args) ?: return@addSyntax
-                val constructorArgs: List<Any> = arguments.mapIndexed { index, _ -> args.get(arguments[index]) }
-
-                crate.rewards.add(reward.primaryConstructor!!.call(constructorArgs))
-                updateCrate(crate)
-
+                val constructorArgs: List<Any> = arguments.indices.map { index -> args.get(arguments[index]) }
+                crate.rewards.add(reward.primaryConstructor!!.call(*constructorArgs.toTypedArray()))
             }
         }
     }
@@ -71,11 +68,6 @@ class LootcrateCommand : Command("lootcrate") {
             return null
         }
         return crate
-    }
-
-    private fun updateCrate(crate: LootCrate) {
-        LootboxExtension.crates.removeIf { it.name == crate.name }
-        LootboxExtension.crates.add(crate)
     }
 
     private val rewardNames: List<String>

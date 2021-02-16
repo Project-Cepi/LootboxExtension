@@ -23,15 +23,10 @@ class LootCrateBlock: CustomBlock(Block.BARREL, LootCrate.lootKey) {
         position: BlockPosition,
         stage: Byte,
         breakers: MutableSet<Player>?
-    ): Int {
-        return 10
-    }
+    ) = 20
 
     override fun onDestroy(instance: Instance, blockPosition: BlockPosition, data: Data?) {
-        println(1)
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
-
-        println(2)
 
         loot.rewards.forEach { reward ->
             getBreakers(instance, blockPosition)?.forEach { reward.dispatch(it) }
@@ -39,7 +34,7 @@ class LootCrateBlock: CustomBlock(Block.BARREL, LootCrate.lootKey) {
     }
 
     override fun onInteract(player: Player, hand: Player.Hand, blockPosition: BlockPosition, data: Data?): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
     override fun getCustomBlockId(): Short {
