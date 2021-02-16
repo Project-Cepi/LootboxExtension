@@ -7,7 +7,7 @@ fun interface Reward {
     fun dispatch(target: Player)
 
     companion object {
-        val Rewards: Array<KClass<out Reward>> = arrayOf(
+        val rewards: Array<KClass<out Reward>> = arrayOf(
             XPReward::class
         )
     }

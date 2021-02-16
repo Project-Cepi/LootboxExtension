@@ -6,13 +6,10 @@ import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Arguments
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
-import net.minestom.server.data.DataImpl
 import net.minestom.server.entity.Player
-import net.minestom.server.item.ItemStack
-import net.minestom.server.item.Material
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
-import world.cepi.crates.rewards.Reward.Companion.Rewards
+import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -42,23 +39,17 @@ class LootcrateCommand : Command("lootcrate") {
         }
 
         addSyntax(get, name) { sender, args ->
-            val crate = getCrate(sender, args)
+            val crate = getCrate(sender, args)!!
             if (sender !is Player) {
                 sender.sendMessage(ColoredText.of(ChatColor.RED, "Please only run this command as a player"))
                 return@addSyntax
             }
 
-            val barrel = ItemStack(Material.BARREL, 1)
-            val barrelData = DataImpl()
-            barrelData.set(LootCrate.lootKey, crate, LootCrate::class.java)
-            barrel.data = barrelData
-            barrel.displayName = ColoredText.of(ChatColor.GOLD, "Loot Crate")
-
-            sender.inventory.addItemStack(barrel)
+            sender.inventory.addItemStack(crate.toItem())
 
         }
 
-        Rewards.forEach { reward ->
+        rewards.forEach { reward ->
             val arguments = argumentsFromConstructor(reward.primaryConstructor!!)
 
             addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->
@@ -88,6 +79,6 @@ class LootcrateCommand : Command("lootcrate") {
     }
 
     private val rewardNames: List<String>
-        get() = Rewards.map { it.simpleName ?: "" }
+        get() = rewards.map { it.simpleName ?: "" }
 
 }
