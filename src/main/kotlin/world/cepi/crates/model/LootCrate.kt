@@ -15,7 +15,7 @@ data class LootCrate(
 ) {
 
     fun toItem(): ItemStack {
-        val barrel = ItemStack(Material.BARREL, 1)
+        val barrel = ItemStack(Material.CHEST, 1)
         val barrelData = DataImpl()
         barrelData.set(lootKey, this)
         barrel.data = barrelData

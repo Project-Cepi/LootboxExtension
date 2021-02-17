@@ -11,7 +11,7 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) {
 
     val data = item.data ?: DataImpl()
 
-    if (item.material == Material.BARREL && data.hasKey(LootCrate.lootKey)) {
+    if (item.material == Material.CHEST && data.hasKey(LootCrate.lootKey)) {
         event.setCustomBlock(LootCrate.lootKey)
         event.blockData = data
 

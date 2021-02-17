@@ -11,7 +11,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 
-class LootCrateBlock: CustomBlock(Block.BARREL, LootCrate.lootKey) {
+class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
     val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
 
