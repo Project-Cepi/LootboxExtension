@@ -33,8 +33,12 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
     override fun onDestroy(instance: Instance, blockPosition: BlockPosition, data: Data?) {
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
 
+        breakingMap[blockPosition]?.forEach { it.key.sendMessage("Loot crate opened: ")}
+
         loot.rewards.forEach { reward ->
-            breakingMap[blockPosition]?.forEach { reward.dispatch(it.key) }
+            breakingMap[blockPosition]?.forEach {
+                it.key.sendMessage(reward.dispatch(it.key))
+            }
         }
 
         breakingMap.remove(blockPosition)

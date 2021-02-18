@@ -3,8 +3,8 @@ package world.cepi.crates.rewards
 import net.minestom.server.entity.Player
 import kotlin.reflect.KClass
 
-fun interface Reward {
-    fun dispatch(target: Player)
+interface Reward {
+    fun dispatch(target: Player): String
 
     companion object {
         val rewards: Array<KClass<out Reward>> = arrayOf(

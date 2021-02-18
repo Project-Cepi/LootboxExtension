@@ -5,10 +5,14 @@ import net.minestom.server.utils.math.IntRange
 import world.cepi.level.ExperienceManager
 
 class XPReward(private val xp: IntRange) : Reward {
-    override fun dispatch(target: Player) {
+
+    override fun dispatch(target: Player): String {
         if (xp.minimum == Int.MIN_VALUE) xp.minimum = 0
         if (xp.maximum == Int.MAX_VALUE) xp.maximum = xp.minimum
-        ExperienceManager.addExperience(target, ((xp.minimum)..(xp.maximum)).random())
-        return
+
+        val decidedXP = ((xp.minimum)..(xp.maximum)).random()
+
+        ExperienceManager.addExperience(target, decidedXP)
+        return "$decidedXP XP"
     }
 }
