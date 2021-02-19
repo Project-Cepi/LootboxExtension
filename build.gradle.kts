@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:KStom:120c4c5475")
 
     // import kotlinx serialization
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
