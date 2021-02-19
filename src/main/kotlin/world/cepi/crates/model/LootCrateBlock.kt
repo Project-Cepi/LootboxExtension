@@ -7,6 +7,8 @@ import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.block.CustomBlock
+import net.minestom.server.sound.Sound
+import net.minestom.server.sound.SoundCategory
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
@@ -28,12 +30,36 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
         position: BlockPosition,
         stage: Byte,
         breakers: MutableSet<Player>?
-    ) = 20
+    ): Int {
+
+        player.playSound(
+            Sound.BLOCK_NOTE_BLOCK_PLING,
+            SoundCategory.PLAYERS,
+            player.position.toBlockPosition().x,
+            player.position.toBlockPosition().y,
+            player.position.toBlockPosition().z,
+            1f,
+            .5f + (.15f * stage)
+        )
+
+        return 20
+    }
 
     override fun onDestroy(instance: Instance, blockPosition: BlockPosition, data: Data?) {
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
 
-        breakingMap[blockPosition]?.forEach { it.key.sendMessage("Loot crate opened: ")}
+        breakingMap[blockPosition]?.keys?.forEach {
+            it.playSound(
+                Sound.BLOCK_NOTE_BLOCK_PLING,
+                SoundCategory.PLAYERS,
+                it.position.toBlockPosition().x,
+                it.position.toBlockPosition().y,
+                it.position.toBlockPosition().z,
+                1f,
+                2f
+            )
+            it.sendMessage("Loot crate opened: ")
+        }
 
         loot.rewards.forEach { reward ->
             breakingMap[blockPosition]?.forEach {
