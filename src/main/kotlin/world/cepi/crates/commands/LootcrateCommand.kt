@@ -9,7 +9,9 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
+import world.cepi.crates.rewards.ItemReward
 import world.cepi.crates.rewards.Reward.Companion.rewards
+import world.cepi.itemextension.item.Item
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -50,6 +52,19 @@ class LootcrateCommand : Command("lootcrate") {
         }
 
         rewards.forEach { reward ->
+
+            if (reward.isInstance(ItemReward::class)) {
+
+                addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
+                    val crate = getCrate(sender, args) ?: return@addSyntax
+                    val player = sender as Player
+                    val item = player.itemInMainHand.data?.get<Item>(Item.key) ?: return@addSyntax
+                    crate.rewards.add(ItemReward(item, player.itemInMainHand.amount))
+                }
+
+                return@forEach
+            }
+
             val arguments = argumentsFromConstructor(reward.primaryConstructor!!)
 
             addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->

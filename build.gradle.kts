@@ -43,6 +43,9 @@ dependencies {
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
+
+    // Add items
+    compileOnly("com.github.Project-Cepi:ItemExtension:0c931a7440")
 }
 
 tasks.withType<Test> {
@@ -72,3 +75,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "11" }
+val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks

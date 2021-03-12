@@ -8,7 +8,8 @@ interface Reward {
 
     companion object {
         val rewards: Array<KClass<out Reward>> = arrayOf(
-            XPReward::class
+            XPReward::class,
+            ItemReward::class
         )
     }
 }
