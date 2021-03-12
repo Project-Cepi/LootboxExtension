@@ -53,7 +53,7 @@ class LootcrateCommand : Command("lootcrate") {
 
         rewards.forEach { reward ->
 
-            if (reward.isInstance(ItemReward::class)) {
+            if (reward == ItemReward::class) {
 
                 addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
                     val crate = getCrate(sender, args) ?: return@addSyntax

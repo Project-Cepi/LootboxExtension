@@ -9,7 +9,7 @@ class ItemReward(val item: Item, val amount: Byte): Reward {
     override fun dispatch(target: Player): String {
         target.inventory.addItemStack(item.renderItem(amount))
 
-        return "$amount ${item.getTrait<NameTrait>() ?: "Item"}!"
+        return "$amount ${item.getTrait<NameTrait>()?.name ?: "Item"}!"
 
     }
 
