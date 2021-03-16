@@ -33,7 +33,7 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:437afc28ff")
+    compileOnly("com.github.Minestom:Minestom:c960bb297b")
 
     // implement KStom
     compileOnly("com.github.Project-Cepi:KStom:120c4c5475")
@@ -46,15 +46,13 @@ dependencies {
 
     // Add items
     compileOnly("com.github.Project-Cepi:ItemExtension:0c931a7440")
+
+    // Add mobs
+    compileOnly("com.github.Project-Cepi:MobExtension:bae2f225d4")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.shadowJar {
-    exclude("net.minestom.*")
-    exclude("world.cepi.kstom")
 }
 
 tasks {

@@ -1,12 +1,15 @@
 package world.cepi.crates.rewards
 
 import net.minestom.server.entity.Player
+import net.minestom.server.instance.Instance
+import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.math.IntRange
+import world.cepi.crates.model.LootCrate
 import world.cepi.level.ExperienceManager
 
 class XPReward(private val xp: IntRange) : Reward {
 
-    override fun dispatch(target: Player): String {
+    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): String {
         if (xp.minimum == Int.MIN_VALUE) xp.minimum = 0
         if (xp.maximum == Int.MAX_VALUE) xp.maximum = xp.minimum
 

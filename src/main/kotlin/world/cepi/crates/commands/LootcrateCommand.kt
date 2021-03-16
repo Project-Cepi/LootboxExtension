@@ -10,11 +10,13 @@ import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.ItemReward
+import world.cepi.crates.rewards.MobReward
 import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.itemextension.item.Item
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.mobextension.Mob
 import java.util.*
 import kotlin.reflect.full.primaryConstructor
 
@@ -53,24 +55,32 @@ class LootcrateCommand : Command("lootcrate") {
 
         rewards.forEach { reward ->
 
-            if (reward == ItemReward::class) {
-
-                addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
-                    val crate = getCrate(sender, args) ?: return@addSyntax
-                    val player = sender as Player
-                    val item = player.itemInMainHand.data?.get<Item>(Item.key) ?: return@addSyntax
-                    crate.rewards.add(ItemReward(item, player.itemInMainHand.amount))
+            when(reward) {
+                ItemReward::class -> {
+                    addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
+                        val crate = getCrate(sender, args) ?: return@addSyntax
+                        val player = sender as Player
+                        val item = player.itemInMainHand.data?.get<Item>(Item.key) ?: return@addSyntax
+                        crate.rewards.add(ItemReward(item, player.itemInMainHand.amount))
+                    }
                 }
+                MobReward::class -> {
+                    addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
+                        val crate = getCrate(sender, args) ?: return@addSyntax
+                        val player = sender as Player
+                        val item = player.itemInMainHand.data?.get<Mob>(Mob.mobKey) ?: return@addSyntax
+                        crate.rewards.add(MobReward(item))
+                    }
+                }
+                else -> {
+                    val arguments = argumentsFromConstructor(reward.primaryConstructor!!)
 
-                return@forEach
-            }
-
-            val arguments = argumentsFromConstructor(reward.primaryConstructor!!)
-
-            addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->
-                val crate = getCrate(sender, args) ?: return@addSyntax
-                val constructorArgs: List<Any> = arguments.indices.map { index -> args.get(arguments[index]) }
-                crate.rewards.add(reward.primaryConstructor!!.call(*constructorArgs.toTypedArray()))
+                    addSyntax(rewardSubcommand, name, rewardType, *arguments.toTypedArray()) { sender, args ->
+                        val crate = getCrate(sender, args) ?: return@addSyntax
+                        val constructorArgs: List<Any> = arguments.indices.map { index -> args.get(arguments[index]) }
+                        crate.rewards.add(reward.primaryConstructor!!.call(*constructorArgs.toTypedArray()))
+                    }
+                }
             }
         }
     }

@@ -63,7 +63,8 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
         loot.rewards.forEach { reward ->
             breakingMap[blockPosition]?.forEach {
-                it.key.sendMessage(reward.dispatch(it.key))
+                val message = reward.dispatch(it.key, loot, instance, blockPosition)
+                if (message != "") it.key.sendMessage(message)
             }
         }
 

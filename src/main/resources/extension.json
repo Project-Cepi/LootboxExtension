@@ -3,6 +3,8 @@
   "name": "CratesExtension",
   "version": "1.0.0-EXAMPLE",
   "dependencies": [
-    "LevelExtension"
+    "LevelExtension",
+    "MobExtension",
+    "ItemExtension"
   ]
 }
