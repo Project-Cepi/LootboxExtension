@@ -6,7 +6,7 @@ plugins {
 
     // Apply the application plugin to add support for building a jar
     java
-    id("org.jetbrains.dokka") version "1.4.20"
+    id("org.jetbrains.dokka") version "1.4.30"
     kotlin("jvm") version "1.4.21-2"
 }
 
