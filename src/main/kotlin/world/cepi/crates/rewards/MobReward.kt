@@ -10,7 +10,7 @@ class MobReward(val mob: Mob) : Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): String {
         val creature = mob.generateMob()!!
-        creature.setInstance(instance, position.toPosition())
+        creature.setInstance(instance, position.clone().add(0, 1, 0).toPosition())
 
         return ""
 
