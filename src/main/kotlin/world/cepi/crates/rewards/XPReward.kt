@@ -1,5 +1,6 @@
 package world.cepi.crates.rewards
 
+import net.kyori.adventure.text.Component
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
@@ -9,13 +10,13 @@ import world.cepi.level.ExperienceManager
 
 class XPReward(private val xp: IntRange) : Reward {
 
-    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): String {
+    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         if (xp.minimum == Int.MIN_VALUE) xp.minimum = 0
         if (xp.maximum == Int.MAX_VALUE) xp.maximum = xp.minimum
 
         val decidedXP = ((xp.minimum)..(xp.maximum)).random()
 
         ExperienceManager.addExperience(target, decidedXP)
-        return "$decidedXP XP"
+        return Component.text("$decidedXP XP")
     }
 }

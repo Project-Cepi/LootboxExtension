@@ -2,6 +2,8 @@ package world.cepi.crates.model
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer
 import net.minestom.server.data.Data
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
@@ -58,13 +60,13 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
                 1f,
                 2f
             )
-            it.sendMessage("Loot crate opened: ")
+            it.sendMessage(Component.text("Loot crate opened: "))
         }
 
         loot.rewards.forEach { reward ->
             breakingMap[blockPosition]?.forEach {
                 val message = reward.dispatch(it.key, loot, instance, blockPosition)
-                if (message != "") it.key.sendMessage(message)
+                if (PlainComponentSerializer.plain().serialize(message) != "") it.key.sendMessage(message)
             }
         }
 

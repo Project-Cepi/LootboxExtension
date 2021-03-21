@@ -1,13 +1,17 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("jvm") version "1.4.31"
     id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("org.jetbrains.dokka") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.21"
+    `maven-publish`
+
     maven
 
     // Apply the application plugin to add support for building a jar
     java
-    id("org.jetbrains.dokka") version "1.4.30"
-    kotlin("jvm") version "1.4.21-2"
 }
 
 repositories {
@@ -33,13 +37,16 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:c960bb297b")
+    compileOnly("com.github.Project-Cepi:Minestom:60a03a9c8e")
 
-    // implement KStom
-    compileOnly("com.github.Project-Cepi:KStom:eeca6b96b8")
+    // Get KStom
+    compileOnly("com.github.Project-Cepi:KStom:cbcf67f09c")
 
     // import kotlinx serialization
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+
+    // Add Kepi
+    compileOnly("com.github.Project-Cepi:Kepi:e124e9d1f8")
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")

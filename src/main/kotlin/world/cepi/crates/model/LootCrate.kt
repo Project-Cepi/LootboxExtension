@@ -1,8 +1,8 @@
 package world.cepi.crates.model
 
 import kotlinx.serialization.Serializable
-import net.minestom.server.chat.ChatColor
-import net.minestom.server.chat.ColoredText
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.data.DataImpl
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
@@ -19,7 +19,7 @@ data class LootCrate(
         val barrelData = DataImpl()
         barrelData.set(lootKey, this)
         barrel.data = barrelData
-        barrel.displayName = ColoredText.of(ChatColor.GOLD, "Loot Crate")
+        barrel.displayName = Component.text("Loot Crate", NamedTextColor.GOLD)
         return barrel
     }
 
