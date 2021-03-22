@@ -5,6 +5,7 @@
   "dependencies": [
     "LevelExtension",
     "MobExtension",
-    "ItemExtension"
+    "ItemExtension",
+    "Kepi"
   ]
 }

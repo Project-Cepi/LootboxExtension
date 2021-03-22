@@ -7,6 +7,7 @@ import net.minestom.server.data.DataImpl
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import world.cepi.crates.rewards.Reward
+import world.cepi.kstom.adventure.asMini
 
 @Serializable
 data class LootCrate(
@@ -19,7 +20,11 @@ data class LootCrate(
         val barrelData = DataImpl()
         barrelData.set(lootKey, this)
         barrel.data = barrelData
-        barrel.displayName = Component.text("Loot Crate", NamedTextColor.GOLD)
+        barrel.displayName = "<gradient:yellow:gold>Loot Crate".asMini()
+        barrel.lore = arrayListOf<Component>(
+            Component.space(),
+            Component.text("ID: ", NamedTextColor.GRAY).append(Component.text(name, NamedTextColor.WHITE))
+        )
         return barrel
     }
 
