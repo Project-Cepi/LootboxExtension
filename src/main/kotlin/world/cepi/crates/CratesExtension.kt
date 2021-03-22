@@ -5,7 +5,6 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.extensions.Extension;
 import net.minestom.server.item.Material
-import org.slf4j.Logger
 import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.listeners.onBlockPlace
 import world.cepi.crates.model.LootCrate
@@ -20,7 +19,7 @@ class LootboxExtension : Extension() {
             it.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
         }
 
-        MinecraftServer.getBlockManager().registerCustomBlock(LootCrateBlock())
+        MinecraftServer.getBlockManager().registerCustomBlock(LootCrateBlock)
 
         MinecraftServer.getCommandManager().register(LootcrateCommand())
 

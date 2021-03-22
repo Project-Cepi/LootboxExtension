@@ -14,10 +14,11 @@ import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
+import org.apache.logging.log4j.util.Strings
 
-class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
+object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
-    val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
+    private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
 
     override fun onPlace(instance: Instance, blockPosition: BlockPosition, data: Data?) {
 
@@ -62,7 +63,7 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
         loot.rewards.forEach { reward ->
             breakingMap[position]?.forEach {
                 val message = reward.dispatch(it.key, loot, instance, position)
-                if (PlainComponentSerializer.plain().serialize(message) != "") it.key.sendMessage(message)
+                if (PlainComponentSerializer.plain().serialize(message) != Strings.EMPTY) it.key.sendMessage(message)
             }
         }
 
