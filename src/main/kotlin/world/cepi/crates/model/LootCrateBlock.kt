@@ -2,6 +2,7 @@ package world.cepi.crates.model
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
+import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer
 import net.minestom.server.data.Data
@@ -9,8 +10,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.block.CustomBlock
-import net.minestom.server.sound.Sound
-import net.minestom.server.sound.SoundCategory
+import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
@@ -34,43 +34,39 @@ class LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
         breakers: MutableSet<Player>?
     ): Int {
 
-        player.playSound(
-            Sound.BLOCK_NOTE_BLOCK_PLING,
-            SoundCategory.PLAYERS,
-            player.position.toBlockPosition().x,
-            player.position.toBlockPosition().y,
-            player.position.toBlockPosition().z,
+        player.playSound(Sound.sound(
+            SoundEvent.BLOCK_NOTE_BLOCK_PLING,
+            Sound.Source.PLAYER,
             1f,
             .5f + (.15f * stage)
-        )
+        ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
 
         return 20
     }
 
-    override fun onDestroy(instance: Instance, blockPosition: BlockPosition, data: Data?) {
+    override fun onDestroy(instance: Instance, position: BlockPosition, data: Data?) {
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
 
-        breakingMap[blockPosition]?.keys?.forEach {
-            it.playSound(
-                Sound.BLOCK_NOTE_BLOCK_PLING,
-                SoundCategory.PLAYERS,
-                it.position.toBlockPosition().x,
-                it.position.toBlockPosition().y,
-                it.position.toBlockPosition().z,
+        breakingMap[position]?.keys?.forEach {
+
+            it.playSound(Sound.sound(
+                SoundEvent.BLOCK_NOTE_BLOCK_PLING,
+                Sound.Source.PLAYER,
                 1f,
                 2f
-            )
+            ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
+
             it.sendMessage(Component.text("Loot crate opened: "))
         }
 
         loot.rewards.forEach { reward ->
-            breakingMap[blockPosition]?.forEach {
-                val message = reward.dispatch(it.key, loot, instance, blockPosition)
+            breakingMap[position]?.forEach {
+                val message = reward.dispatch(it.key, loot, instance, position)
                 if (PlainComponentSerializer.plain().serialize(message) != "") it.key.sendMessage(message)
             }
         }
 
-        breakingMap.remove(blockPosition)
+        breakingMap.remove(position)
     }
 
     override fun onInteract(player: Player, hand: Player.Hand, blockPosition: BlockPosition, data: Data?): Boolean {
