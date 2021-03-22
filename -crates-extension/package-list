@@ -20,8 +20,6 @@ $dokka.location:world.cepi.crates.model/LootCrate/name/#/PointingToDeclaration/
 $dokka.location:world.cepi.crates.model/LootCrate/rewards/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate/rewards.html
 $dokka.location:world.cepi.crates.model/LootCrate/toItem/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate/to-item.html
 $dokka.location:world.cepi.crates.model/LootCrateBlock///PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/index.html
-$dokka.location:world.cepi.crates.model/LootCrateBlock/LootCrateBlock/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/-loot-crate-block.html
-$dokka.location:world.cepi.crates.model/LootCrateBlock/breakingMap/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/breaking-map.html
 $dokka.location:world.cepi.crates.model/LootCrateBlock/enableCustomBreakDelay/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/enable-custom-break-delay.html
 $dokka.location:world.cepi.crates.model/LootCrateBlock/enableMultiPlayerBreaking/#/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/enable-multi-player-breaking.html
 $dokka.location:world.cepi.crates.model/LootCrateBlock/getBreakDelay/#net.minestom.server.entity.Player#net.minestom.server.utils.BlockPosition#kotlin.Byte#kotlin.collections.MutableSet[net.minestom.server.entity.Player]?/PointingToDeclaration/-crates-extension/world.cepi.crates.model/-loot-crate-block/get-break-delay.html
