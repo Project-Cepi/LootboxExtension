@@ -31,6 +31,7 @@ class LootboxExtension : Extension() {
 
         logger.info("[CratesExtension] has been disabled!")
     }
+
     companion object {
         private val lootboxesFile = File("./lootboxes/")
         val crates: MutableList<LootCrate> = loadCrates()
@@ -49,9 +50,4 @@ class LootboxExtension : Extension() {
         }
     }
 
-}
-
-fun getMaterialFromRegistryName(registryName: String): Material? {
-    Material.values().forEach { if (it.name == registryName) return it}
-    return null
 }
