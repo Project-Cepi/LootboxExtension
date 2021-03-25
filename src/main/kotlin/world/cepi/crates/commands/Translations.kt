@@ -1,6 +1,6 @@
 package world.cepi.crates.commands
 
-const val lootcrateUsage = "Usage: /lootboxes create|add|get <args>"
+const val lootcrateUsage = "Usage: /lootboxes create|get|list|info|reward <args>"
 const val lootcrateAlreadyExists = "That crate already exists!"
 const val lootcrateDoesNotexist = "That crate does not exist!"
 const val lootcrateAdded = "Added crate!"

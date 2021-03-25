@@ -64,7 +64,7 @@ object LootcrateCommand : Command("lootcrate") {
                 sender.sendMessage(
                     Component.text("-", NamedTextColor.DARK_GRAY)
                         .append(Component.space())
-                        .append(Component.text(it.name))
+                        .append(Component.text(it.name, NamedTextColor.GRAY))
                         .hoverEvent(HoverEvent.showText(
                             Component.text("Click to show info", NamedTextColor.GRAY)
                         ))
@@ -76,19 +76,19 @@ object LootcrateCommand : Command("lootcrate") {
         addSubcommand(Help(
             Component.text("First, create a lootcrate by doing:"),
             Component.empty()
-                .append(Component.text("/${getName()} create <id>")),
+                .append(Component.text("/${getName()} create <id>", NamedTextColor.YELLOW)),
             Component.space(),
             Component.text("You can check the info of a crate or add a reward."),
             Component.space(),
             Component.text("Add a reward by doing:"),
             Component.empty()
-                .append(Component.text("/${getName()} reward <id> <reward> <args>")),
+                .append(Component.text("/${getName()} reward <id> <reward> <args>", NamedTextColor.YELLOW)),
             Component.space(),
             Component.text("For example, XP has the arguments ")
                 .append(Component.text("<min>..<max>", NamedTextColor.BLUE)),
             Component.text("Finally, grab the lootcrate by using"),
             Component.empty()
-                .append(Component.text("/${getName()} get <id>")),
+                .append(Component.text("/${getName()} get <id>", NamedTextColor.YELLOW)),
         ))
 
         rewards.forEach { reward ->
