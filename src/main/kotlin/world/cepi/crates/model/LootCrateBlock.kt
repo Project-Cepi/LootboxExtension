@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer
 import net.minestom.server.data.Data
 import net.minestom.server.entity.Player
@@ -15,6 +16,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import org.apache.logging.log4j.util.Strings
+import javax.naming.Name
 
 object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
@@ -57,13 +59,18 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
                 2f
             ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
 
-            it.sendMessage(Component.text("Loot crate opened: "))
+            if (loot.rewards.isNotEmpty())
+                it.sendMessage(Component.text("Loot crate opened: ", NamedTextColor.GREEN))
         }
 
         loot.rewards.forEach { reward ->
             breakingMap[position]?.forEach {
                 val message = reward.dispatch(it.key, loot, instance, position)
-                if (PlainComponentSerializer.plain().serialize(message) != Strings.EMPTY) it.key.sendMessage(message)
+                if (PlainComponentSerializer.plain().serialize(message) != Strings.EMPTY) {
+                    it.key.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
+                        .append(Component.space())
+                        .append(message.color(NamedTextColor.GRAY)))
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 package world.cepi.crates.rewards
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
@@ -17,6 +18,9 @@ class XPReward(private val xp: IntRange) : Reward {
         val decidedXP = ((xp.minimum)..(xp.maximum)).random()
 
         ExperienceManager.addExperience(target, decidedXP)
-        return Component.text("$decidedXP XP")
+        return Component.empty()
+            .append(Component.text(decidedXP, NamedTextColor.BLUE)
+            .append(Component.space()))
+            .append(Component.text("XP", NamedTextColor.GRAY))
     }
 }
