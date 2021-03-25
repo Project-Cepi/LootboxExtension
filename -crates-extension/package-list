@@ -8,7 +8,6 @@ $dokka.location:world.cepi.crates.commands//lootcratePlaced/#/PointingToDeclarat
 $dokka.location:world.cepi.crates.commands//lootcrateRewardAdded/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-reward-added.html
 $dokka.location:world.cepi.crates.commands//lootcrateUsage/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-usage.html
 $dokka.location:world.cepi.crates.commands/LootcrateCommand///PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-lootcrate-command/index.html
-$dokka.location:world.cepi.crates.commands/LootcrateCommand/LootcrateCommand/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-lootcrate-command/-lootcrate-command.html
 $dokka.location:world.cepi.crates.listeners////PointingToDeclaration/-crates-extension/world.cepi.crates.listeners/index.html
 $dokka.location:world.cepi.crates.listeners//onBlockPlace/#net.minestom.server.event.player.PlayerBlockPlaceEvent/PointingToDeclaration/-crates-extension/world.cepi.crates.listeners/on-block-place.html
 $dokka.location:world.cepi.crates.model////PointingToDeclaration/-crates-extension/world.cepi.crates.model/index.html
@@ -53,6 +52,7 @@ $dokka.location:world.cepi.crates/LootboxExtension.Companion/crates/#/PointingTo
 $dokka.location:world.cepi.crates/LootboxExtension///PointingToDeclaration/-crates-extension/world.cepi.crates/-lootbox-extension/index.html
 $dokka.location:world.cepi.crates/LootboxExtension/LootboxExtension/#/PointingToDeclaration/-crates-extension/world.cepi.crates/-lootbox-extension/-lootbox-extension.html
 $dokka.location:world.cepi.crates/LootboxExtension/initialize/#/PointingToDeclaration/-crates-extension/world.cepi.crates/-lootbox-extension/initialize.html
+$dokka.location:world.cepi.crates/LootboxExtension/playerInitialization/#/PointingToDeclaration/-crates-extension/world.cepi.crates/-lootbox-extension/player-initialization.html
 $dokka.location:world.cepi.crates/LootboxExtension/terminate/#/PointingToDeclaration/-crates-extension/world.cepi.crates/-lootbox-extension/terminate.html
 world.cepi.crates
 world.cepi.crates.commands
