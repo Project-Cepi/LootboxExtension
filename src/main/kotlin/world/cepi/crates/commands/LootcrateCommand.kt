@@ -1,5 +1,6 @@
 package world.cepi.crates.commands
 
+import net.kyori.adventure.text.Component
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.CommandContext
@@ -10,6 +11,7 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.ItemReward
 import world.cepi.crates.rewards.MobReward
 import world.cepi.crates.rewards.Reward.Companion.rewards
+import world.cepi.itemextension.command.itemcommand.sendFormattedMessage
 import world.cepi.itemextension.item.Item
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
@@ -30,15 +32,15 @@ class LootcrateCommand : Command("lootcrate") {
 
     init {
         addSyntax { sender ->
-            sender.sendFormattedMessage(lootcrateUsage)
+            sender.sendFormattedMessage(lootcrateUsage, Component.empty())
         }
 
         addSyntax(create, name) { sender, args ->
             val crate = LootboxExtension.crates.firstOrNull { it.name == args.get(name) }
-            if (crate != null) sender.sendFormattedMessage(lootcrateAlreadyExists)
+            if (crate != null) sender.sendFormattedMessage(lootcrateAlreadyExists, Component.empty())
 
             LootboxExtension.crates.add(LootCrate(args.get(name)))
-            sender.sendFormattedMessage(lootcrateAdded)
+            sender.sendFormattedMessage(lootcrateAdded, Component.empty())
         }
 
         addSyntax(get, name) { sender, args ->
@@ -59,14 +61,18 @@ class LootcrateCommand : Command("lootcrate") {
                         val player = sender as Player
                         val item = player.itemInMainHand.data?.get<Item>(Item.key) ?: return@addSyntax
                         crate.rewards.add(ItemReward(item, player.itemInMainHand.amount))
+
+                        player.sendFormattedMessage(lootcrateRewardAdded, Component.text("Item"))
                     }
                 }
                 MobReward::class -> {
                     addSyntax(rewardSubcommand, name, rewardType) { sender, args ->
                         val crate = getCrate(sender, args) ?: return@addSyntax
                         val player = sender as Player
-                        val item = player.itemInMainHand.data?.get<Mob>(Mob.mobKey) ?: return@addSyntax
-                        crate.rewards.add(MobReward(item))
+                        val mob = player.itemInMainHand.data?.get<Mob>(Mob.mobKey) ?: return@addSyntax
+                        crate.rewards.add(MobReward(mob))
+
+                        player.sendFormattedMessage(lootcrateRewardAdded, Component.text("Mob"))
                     }
                 }
                 else -> {
@@ -86,7 +92,7 @@ class LootcrateCommand : Command("lootcrate") {
         val name = context.get(name)
         val crate = LootboxExtension.crates.firstOrNull { it.name == name }
         if (crate == null) {
-            sender.sendFormattedMessage(lootcrateDoesNotexist)
+            sender.sendFormattedMessage(lootcrateDoesNotexist, Component.empty())
             return null
         }
         return crate
