@@ -5,6 +5,7 @@ $dokka.location:world.cepi.crates.commands//lootcrateAdded/#/PointingToDeclarati
 $dokka.location:world.cepi.crates.commands//lootcrateAlreadyExists/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-already-exists.html
 $dokka.location:world.cepi.crates.commands//lootcrateDoesNotexist/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-does-notexist.html
 $dokka.location:world.cepi.crates.commands//lootcratePlaced/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-placed.html
+$dokka.location:world.cepi.crates.commands//lootcrateRewardAdded/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-reward-added.html
 $dokka.location:world.cepi.crates.commands//lootcrateUsage/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/lootcrate-usage.html
 $dokka.location:world.cepi.crates.commands/LootcrateCommand///PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-lootcrate-command/index.html
 $dokka.location:world.cepi.crates.commands/LootcrateCommand/LootcrateCommand/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-lootcrate-command/-lootcrate-command.html
