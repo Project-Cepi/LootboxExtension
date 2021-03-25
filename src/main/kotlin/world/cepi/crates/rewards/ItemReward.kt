@@ -14,6 +14,7 @@ class ItemReward(val item: Item, val amount: Byte): Reward {
         target.inventory.addItemStack(item.renderItem(amount))
 
         return Component.text("$amount ${item.getTrait<NameTrait>()?.name ?: "Item"}!")
+            .hoverEvent(item.renderItem(amount).asHoverEvent())
 
     }
 
