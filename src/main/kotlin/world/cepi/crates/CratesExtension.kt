@@ -2,6 +2,7 @@ package world.cepi.crates
 
 import kotlinx.serialization.json.Json
 import net.minestom.server.MinecraftServer
+import net.minestom.server.entity.Player
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.extensions.Extension;
 import net.minestom.server.item.Material
@@ -13,21 +14,27 @@ import java.io.File
 
 class LootboxExtension : Extension() {
 
+    val playerInitialization: (Player) -> Unit = {
+        it.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
+    }
+
     override fun initialize() {
 
-        MinecraftServer.getConnectionManager().addPlayerInitialization {
-            it.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
-        }
+        MinecraftServer.getConnectionManager().addPlayerInitialization(playerInitialization)
 
         MinecraftServer.getBlockManager().registerCustomBlock(LootCrateBlock)
 
-        MinecraftServer.getCommandManager().register(LootcrateCommand())
+        MinecraftServer.getCommandManager().register(LootcrateCommand)
 
         logger.info("[CratesExtension] has been enabled!")
     }
 
     override fun terminate() {
         saveCrates()
+
+        MinecraftServer.getConnectionManager().removePlayerInitialization(playerInitialization)
+
+        MinecraftServer.getCommandManager().unregister(LootcrateCommand)
 
         logger.info("[CratesExtension] has been disabled!")
     }

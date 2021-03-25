@@ -10,8 +10,8 @@ import world.cepi.mobextension.Mob
 class MobReward(val mob: Mob) : Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
-        val creature = mob.generateMob()!!
-        creature.setInstance(instance, position.clone().add(0, 1, 0).toPosition())
+        val creature = mob.generateMob() ?: return Component.empty()
+        creature.setInstance(instance, position.toPosition())
 
         return Component.empty()
 

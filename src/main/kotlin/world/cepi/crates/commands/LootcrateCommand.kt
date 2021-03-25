@@ -1,6 +1,9 @@
 package world.cepi.crates.commands
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.CommandContext
@@ -14,6 +17,7 @@ import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.itemextension.command.itemcommand.sendFormattedMessage
 import world.cepi.itemextension.item.Item
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
@@ -21,13 +25,16 @@ import world.cepi.mobextension.Mob
 import java.util.*
 import kotlin.reflect.full.primaryConstructor
 
-class LootcrateCommand : Command("lootcrate") {
+object LootcrateCommand : Command("lootcrate") {
 
     private val name = ArgumentType.Word("name")
     private val rewardType = ArgumentType.Word("rewardType").from(*rewardNames.toTypedArray())
 
     private val create = "create".asSubcommand()
     private val get = "get".asSubcommand()
+    private val info = "info".asSubcommand()
+    private val list = "list".asSubcommand()
+
     private val rewardSubcommand = "reward".asSubcommand()
 
     init {
@@ -51,6 +58,38 @@ class LootcrateCommand : Command("lootcrate") {
             player.inventory.addItemStack(crate.toItem())
 
         }
+
+        addSyntax(list) { sender ->
+            LootboxExtension.crates.forEach {
+                sender.sendMessage(
+                    Component.text("-", NamedTextColor.DARK_GRAY)
+                        .append(Component.space())
+                        .append(Component.text(it.name))
+                        .hoverEvent(HoverEvent.showText(
+                            Component.text("Click to show info", NamedTextColor.GRAY)
+                        ))
+                        .clickEvent(ClickEvent.runCommand("/${getName()} info ${it.name}"))
+                )
+            }
+        }
+
+        addSubcommand(Help(
+            Component.text("First, create a lootcrate by doing:"),
+            Component.empty()
+                .append(Component.text("/${getName()} create <id>")),
+            Component.space(),
+            Component.text("You can check the info of a crate or add a reward."),
+            Component.space(),
+            Component.text("Add a reward by doing:"),
+            Component.empty()
+                .append(Component.text("/${getName()} reward <id> <reward> <args>")),
+            Component.space(),
+            Component.text("For example, XP has the arguments ")
+                .append(Component.text("<min>..<max>", NamedTextColor.BLUE)),
+            Component.text("Finally, grab the lootcrate by using"),
+            Component.empty()
+                .append(Component.text("/${getName()} get <id>")),
+        ))
 
         rewards.forEach { reward ->
 
