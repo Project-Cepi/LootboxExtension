@@ -14,7 +14,8 @@ interface Reward {
         val rewards: Array<KClass<out Reward>> = arrayOf(
             XPReward::class,
             ItemReward::class,
-            MobReward::class
+            MobReward::class,
+            TeleportReward::class
         )
     }
 }
