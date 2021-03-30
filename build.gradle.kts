@@ -24,6 +24,7 @@ repositories {
     maven(url = "https://repo.spongepowered.org/maven")
     maven(url = "https://libraries.minecraft.net")
     maven(url = "https://jcenter.bintray.com/")
+    maven(url = "https://repo.velocitypowered.com/snapshots/")
 }
 
 dependencies {
@@ -37,7 +38,7 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:13b1d1e7a5")
+    compileOnly("com.github.Project-Cepi:Minestom:b29217e076")
 
     // Get KStom
     compileOnly("com.github.Project-Cepi:KStom:cbcf67f09c")
