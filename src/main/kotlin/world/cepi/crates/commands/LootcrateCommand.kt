@@ -102,8 +102,7 @@ object LootcrateCommand : Command("lootcrate") {
         return crate
     }
 
-    val rewardNames: List<String> by lazy {
-        rewards.map { it.simpleName ?: "" }
-    }
+    val rewardNames: List<String>
+        get() = rewards.map { it.simpleName ?: "" }
 
 }

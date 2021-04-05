@@ -1,6 +1,7 @@
 package world.cepi.crates.rewards
 
 import net.kyori.adventure.text.Component
+import net.minestom.server.command.CommandSender
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
@@ -14,6 +15,18 @@ class TeleportReward(val relativeVec: RelativeVec): Reward {
         target.teleport(relativeVec.from(position.toPosition()).toPosition())
 
         return Component.empty()
+    }
+
+    companion object: RewardGenerator<TeleportReward> {
+        override fun generateReward(sender: CommandSender, args: List<Any>): TeleportReward? {
+
+            if (args.isEmpty()) return null
+
+            val relativeVec = args[0] as? RelativeVec ?: return null
+
+            return TeleportReward(relativeVec)
+
+        }
     }
 
 }
