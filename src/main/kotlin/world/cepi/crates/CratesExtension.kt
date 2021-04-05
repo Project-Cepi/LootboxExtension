@@ -10,6 +10,9 @@ import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.listeners.onBlockPlace
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.model.LootCrateBlock
+import world.cepi.kstom.Manager
+import world.cepi.kstom.command.register
+import world.cepi.kstom.command.unregister
 import java.io.File
 
 class LootboxExtension : Extension() {
@@ -20,11 +23,11 @@ class LootboxExtension : Extension() {
 
     override fun initialize() {
 
-        MinecraftServer.getConnectionManager().addPlayerInitialization(playerInitialization)
+        Manager.connection.addPlayerInitialization(playerInitialization)
 
-        MinecraftServer.getBlockManager().registerCustomBlock(LootCrateBlock)
+        Manager.block.registerCustomBlock(LootCrateBlock)
 
-        MinecraftServer.getCommandManager().register(LootcrateCommand)
+        LootcrateCommand.register()
 
         logger.info("[CratesExtension] has been enabled!")
     }
@@ -32,9 +35,9 @@ class LootboxExtension : Extension() {
     override fun terminate() {
         saveCrates()
 
-        MinecraftServer.getConnectionManager().removePlayerInitialization(playerInitialization)
+        Manager.connection.removePlayerInitialization(playerInitialization)
 
-        MinecraftServer.getCommandManager().unregister(LootcrateCommand)
+        LootcrateCommand.unregister()
 
         logger.info("[CratesExtension] has been disabled!")
     }
