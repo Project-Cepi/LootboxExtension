@@ -25,7 +25,6 @@ internal object RewardSubcommand : Command("reward") {
 
     init {
 
-        val rewardSubcommand = "reward".asSubcommand()
         val rewardType = ArgumentType.Word("rewardType").from(*LootcrateCommand.rewardNames.toTypedArray())
 
         Reward.rewards.forEach { reward ->
@@ -34,7 +33,7 @@ internal object RewardSubcommand : Command("reward") {
                 else return@let arr.map { it!! }
             }
 
-            addSyntax(rewardSubcommand, LootcrateCommand.name, rewardType, *arguments.toTypedArray()) { sender, args ->
+            addSyntax(LootcrateCommand.name, rewardType, *arguments.toTypedArray()) { sender, args ->
                 val crate = LootcrateCommand.getCrate(sender, args) ?: return@addSyntax
                 val constructorArgs: List<Any> = arguments.indices.map { index -> args.get(arguments[index]) }
 
