@@ -47,7 +47,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:e124e9d1f8")
+    compileOnly("com.github.Project-Cepi:Kepi:f6579a5eb4")
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")

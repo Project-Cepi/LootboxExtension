@@ -11,7 +11,7 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) {
 
     val item = event.player.getItemInHand(event.hand)
 
-    val data = item.data ?: DataImpl()
+    val data = item.data ?: return
 
     if (item.material == Material.CHEST && data.hasKey(LootCrate.lootKey)) {
         event.setCustomBlock(LootCrate.lootKey)

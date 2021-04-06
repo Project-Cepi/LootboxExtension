@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.commands.lootcrateRewardAdded
+import world.cepi.crates.commands.lootcrateRewardInvalid
 import world.cepi.crates.rewards.ItemReward
 import world.cepi.crates.rewards.MobReward
 import world.cepi.crates.rewards.Reward
@@ -25,23 +26,35 @@ internal object RewardSubcommand : Command("reward") {
 
     init {
 
-        val rewardType = ArgumentType.Word("rewardType").from(*LootcrateCommand.rewardNames.toTypedArray())
-
         Reward.rewards.forEach { reward ->
             val arguments = safeArgumentsFromConstructor(reward.primaryConstructor!!).let { arr ->
                 if (arr.any { it == null }) return@let emptyList()
                 else return@let arr.map { it!! }
             }
 
-            addSyntax(LootcrateCommand.name, rewardType, *arguments.toTypedArray()) { sender, args ->
+            addSyntax(
+                LootcrateCommand.name,
+                reward.simpleName!!.dropLast("Reward".length).toLowerCase().asSubcommand(),
+                *arguments.toTypedArray()
+            ) { sender, args ->
                 val crate = LootcrateCommand.getCrate(sender, args) ?: return@addSyntax
                 val constructorArgs: List<Any> = arguments.indices.map { index -> args.get(arguments[index]) }
 
-                if (reward.companionObject != RewardGenerator::class) return@addSyntax
+                println(reward.companionObjectInstance)
 
-                val generatedReward = (reward.companionObjectInstance as RewardGenerator<*>).generateReward(sender, constructorArgs) ?: return@addSyntax
+                if (
+                    reward.companionObjectInstance != null &&
+                    reward.companionObjectInstance!!::class != RewardGenerator::class
+                ) return@addSyntax
+
+                val generatedReward = (reward.companionObjectInstance as RewardGenerator<*>).generateReward(sender, constructorArgs) ?: let {
+                    sender.sendFormattedMessage(lootcrateRewardInvalid)
+                    return@addSyntax
+                }
 
                 crate.rewards.add(generatedReward)
+
+                sender.sendFormattedMessage(lootcrateRewardAdded, Component.text(reward.simpleName!!))
             }
 
         }

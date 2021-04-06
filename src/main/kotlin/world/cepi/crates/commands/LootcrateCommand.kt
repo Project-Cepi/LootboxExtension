@@ -32,7 +32,6 @@ object LootcrateCommand : Command("lootcrate") {
 
     private val create = "create".asSubcommand()
     private val get = "get".asSubcommand()
-    private val info = "info".asSubcommand()
     private val list = "list".asSubcommand()
 
     init {

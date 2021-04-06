@@ -16,7 +16,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import org.apache.logging.log4j.util.Strings
-import javax.naming.Name
+import world.cepi.kstom.Manager
 
 object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
@@ -65,7 +65,13 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
         loot.rewards.forEach { reward ->
             breakingMap[position]?.forEach {
-                val message = reward.dispatch(it.key, loot, instance, position)
+                val message = try {
+                    reward.dispatch(it.key, loot, instance, position)
+                } catch (exception: Exception) {
+                    Manager.exception.handleException(exception)
+                    Component.text("An internal error occured", NamedTextColor.RED)
+                }
+
                 if (PlainComponentSerializer.plain().serialize(message) != Strings.EMPTY) {
                     it.key.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
                         .append(Component.space())
