@@ -48,7 +48,6 @@ $dokka.location:world.cepi.crates.rewards/MobReward/MobReward/#world.cepi.mobext
 $dokka.location:world.cepi.crates.rewards/MobReward/dispatch/#net.minestom.server.entity.Player#world.cepi.crates.model.LootCrate#net.minestom.server.instance.Instance#net.minestom.server.utils.BlockPosition/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/dispatch.html
 $dokka.location:world.cepi.crates.rewards/MobReward/mob/#/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/mob.html
 $dokka.location:world.cepi.crates.rewards/Reward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/-companion/index.html
-$dokka.location:world.cepi.crates.rewards/Reward.Companion/rewards/#/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/-companion/rewards.html
 $dokka.location:world.cepi.crates.rewards/Reward///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/index.html
 $dokka.location:world.cepi.crates.rewards/Reward/dispatch/#net.minestom.server.entity.Player#world.cepi.crates.model.LootCrate#net.minestom.server.instance.Instance#net.minestom.server.utils.BlockPosition/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/dispatch.html
 $dokka.location:world.cepi.crates.rewards/TeleportReward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-teleport-reward/-companion/index.html
