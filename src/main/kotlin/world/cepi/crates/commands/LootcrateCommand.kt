@@ -4,44 +4,58 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
-import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.Command
-import net.minestom.server.command.builder.CommandContext
 import net.minestom.server.command.builder.arguments.ArgumentType
+import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.commands.subcommand.RewardSubcommand
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
-import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
-import java.util.*
+import world.cepi.kstom.command.setArgumentCallback
 
 object LootcrateCommand : Command("lootcrate") {
 
-    val name = ArgumentType.Word("name")
+    val name = ArgumentType.Word("name").map { name ->
+        val crate = LootboxExtension.crates.firstOrNull { it.name == name }
+        if (crate != null) throw ArgumentSyntaxException("Crate exists", name, 1)
+        name
+    }
+
+    val existingLootCrate = ArgumentType.Word("crate").map { name ->
+        LootboxExtension.crates.firstOrNull { it.name == name }
+            ?: throw ArgumentSyntaxException("Invalid crate", name, 1)
+    }
 
     private val create = "create".asSubcommand()
     private val get = "get".asSubcommand()
     private val list = "list".asSubcommand()
 
     init {
+
+        setArgumentCallback(name) { sender, exception ->
+            sender.sendFormattedTranslatableMessage("lootcrate", "exists", Component.text(exception.input, NamedTextColor.BLUE))
+        }
+
+        setArgumentCallback(existingLootCrate) { sender, exception ->
+            sender.sendFormattedTranslatableMessage("lootcrate", "exists.not", Component.text(exception.input, NamedTextColor.BLUE))
+        }
+
         addSyntax { sender ->
-            sender.sendFormattedMessage(lootcrateUsage, Component.empty())
+            sender.sendFormattedTranslatableMessage("common", "usage", Component.text("/lootboxes create|get|list|info|reward <args>"))
         }
 
         addSyntax(create, name) { sender, args ->
-            val crate = LootboxExtension.crates.firstOrNull { it.name == args.get(name) }
-            if (crate != null) sender.sendFormattedMessage(lootcrateAlreadyExists, Component.empty())
-
             LootboxExtension.crates.add(LootCrate(args.get(name)))
-            sender.sendFormattedMessage(lootcrateAdded, Component.empty())
+            sender.sendFormattedTranslatableMessage("lootcrate", "added", Component.text(args.get(name), NamedTextColor.BLUE))
         }
 
-        addSyntax(get, name) { sender, args ->
-            val crate = getCrate(sender, args) ?: return@addSyntax
+        addSyntax(get, existingLootCrate) { sender, args ->
+            val crate = args.get(existingLootCrate)
 
             val player = sender as Player
 
@@ -84,17 +98,7 @@ object LootcrateCommand : Command("lootcrate") {
         addSubcommand(RewardSubcommand)
     }
 
-    fun getCrate(sender: CommandSender, context: CommandContext): LootCrate? {
-        val name = context.get(name)
-        val crate = LootboxExtension.crates.firstOrNull { it.name == name }
-        if (crate == null) {
-            sender.sendFormattedMessage(lootcrateDoesNotexist, Component.empty())
-            return null
-        }
-        return crate
-    }
-
     val rewardNames: List<String>
-        get() = rewards.map { it.simpleName ?: "" }
+        get() = rewards.map { it.first.simpleName ?: "" }
 
 }

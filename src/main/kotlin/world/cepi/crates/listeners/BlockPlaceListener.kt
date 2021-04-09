@@ -1,10 +1,11 @@
 package world.cepi.crates.listeners
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.item.Material
-import world.cepi.crates.commands.lootcratePlaced
 import world.cepi.crates.model.LootCrate
-import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 
 fun onBlockPlace(event: PlayerBlockPlaceEvent) {
 
@@ -16,6 +17,6 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) {
         event.setCustomBlock(LootCrate.lootKey)
         event.blockData = data
 
-        event.player.sendFormattedMessage(lootcratePlaced)
+        event.player.sendFormattedTranslatableMessage("lootcrate", "place", Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE))
     }
 }
