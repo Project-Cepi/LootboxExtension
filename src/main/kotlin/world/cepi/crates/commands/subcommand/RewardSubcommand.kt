@@ -40,7 +40,12 @@ internal object RewardSubcommand : Command("reward") {
 
                 crate.rewards.add(generatedReward)
 
-                sender.sendFormattedTranslatableMessage("lootcrate", "reward.add", Component.text(reward.simpleName!!, NamedTextColor.BLUE))
+                sender.sendFormattedTranslatableMessage(
+                    "lootcrate",
+                    "reward.add",
+                    Component.text(reward.simpleName!!.dropLast("Reward".length).toLowerCase(), NamedTextColor.BLUE),
+                    Component.text(crate.name, NamedTextColor.YELLOW)
+                )
             }
 
         }
