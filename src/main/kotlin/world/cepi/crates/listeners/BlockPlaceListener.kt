@@ -1,6 +1,5 @@
 package world.cepi.crates.listeners
 
-import net.minestom.server.data.DataImpl
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.item.Material
 import world.cepi.crates.commands.lootcratePlaced

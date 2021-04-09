@@ -12,19 +12,12 @@ import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.commands.subcommand.RewardSubcommand
 import world.cepi.crates.model.LootCrate
-import world.cepi.crates.rewards.ItemReward
-import world.cepi.crates.rewards.MobReward
 import world.cepi.crates.rewards.Reward.Companion.rewards
-import world.cepi.itemextension.command.itemcommand.sendFormattedMessage
-import world.cepi.itemextension.item.Item
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.argumentsFromConstructor
 import world.cepi.kstom.command.arguments.asSubcommand
-import world.cepi.mobextension.Mob
 import java.util.*
-import kotlin.reflect.full.primaryConstructor
 
 object LootcrateCommand : Command("lootcrate") {
 
