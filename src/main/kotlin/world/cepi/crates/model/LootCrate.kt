@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.data.DataImpl
 import net.minestom.server.item.ItemStack
+import net.minestom.server.item.ItemTag
 import net.minestom.server.item.Material
 import world.cepi.crates.rewards.Reward
 import world.cepi.kstom.adventure.asMini
@@ -17,16 +18,21 @@ data class LootCrate(
 ) {
 
     fun toItem(): ItemStack {
-        val barrel = ItemStack(Material.CHEST, 1)
-        val barrelData = DataImpl()
-        barrelData.set(lootKey, this)
-        barrel.data = barrelData
-        barrel.displayName = "<gradient:yellow:gold>Loot Crate".asMini().decoration(TextDecoration.ITALIC, false)
-        barrel.lore = arrayListOf<Component>(
-            Component.space(),
-            Component.text("ID: ", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)
-                .append(Component.text(name, NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
-        )
+        val barrel = ItemStack.of(Material.CHEST).with {
+
+            it.meta { meta ->
+
+                meta.displayName("<gradient:yellow:gold>Loot Crate".asMini().decoration(TextDecoration.ITALIC, false))
+
+                meta.lore(arrayListOf<Component>(
+                    Component.space(),
+                    Component.text("ID: ", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)
+                        .append(Component.text(name, NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
+                ))
+
+                meta.set(ItemTag.String(lootKey), name)
+            }
+        }
         return barrel
     }
 
