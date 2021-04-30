@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:Minestom:8f3ee93191")
 
     // Get KStom
-    compileOnly("com.github.Project-Cepi:KStom:69aeccafe5")
+    compileOnly("com.github.Project-Cepi:KStom:44b08cf20c")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
@@ -51,7 +51,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add items
-    compileOnly("com.github.Project-Cepi:ItemExtension:0c931a7440")
+    compileOnly("com.github.Project-Cepi:ItemExtension:17eaaedb83")
 
     // Add mobs
     compileOnly("com.github.Project-Cepi:MobExtension:bae2f225d4")
