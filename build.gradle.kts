@@ -36,10 +36,10 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:8f3ee93191")
+    compileOnly("com.github.Project-Cepi:Minestom:cd0ea0c0c2")
 
     // Get KStom
-    compileOnly("com.github.Project-Cepi:KStom:44b08cf20c")
+    compileOnly("com.github.Project-Cepi:KStom:8a6da70d7d")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
@@ -51,7 +51,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add items
-    compileOnly("com.github.Project-Cepi:ItemExtension:17eaaedb83")
+    compileOnly("com.github.Project-Cepi:ItemExtension:1792f5aab7")
 
     // Add mobs
     compileOnly("com.github.Project-Cepi:MobExtension:bae2f225d4")

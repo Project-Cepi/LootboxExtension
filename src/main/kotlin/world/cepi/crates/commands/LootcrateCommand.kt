@@ -15,7 +15,7 @@ import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.setArgumentCallback
 
 object LootcrateCommand : Command("lootcrate") {
@@ -31,9 +31,9 @@ object LootcrateCommand : Command("lootcrate") {
             ?: throw ArgumentSyntaxException("Invalid crate", name, 1)
     }
 
-    private val create = "create".asSubcommand()
-    private val get = "get".asSubcommand()
-    private val list = "list".asSubcommand()
+    private val create = "create".literal()
+    private val get = "get".literal()
+    private val list = "list".literal()
 
     init {
 
