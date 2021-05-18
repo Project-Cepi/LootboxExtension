@@ -9,7 +9,7 @@ import world.cepi.crates.model.LootCrate
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance
 
-interface Reward {
+sealed interface Reward {
 
     fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component
 

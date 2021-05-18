@@ -6,8 +6,8 @@ import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
 import world.cepi.crates.model.LootCrate
-import world.cepi.mobextension.Mob
-import world.cepi.mobextension.mob
+import world.cepi.mob.mob.Mob
+import world.cepi.mob.mob.mobEgg
 
 class MobReward(val mob: Mob) : Reward {
 
@@ -24,7 +24,7 @@ class MobReward(val mob: Mob) : Reward {
 
             val player = sender as? Player ?: return null
 
-            val mob = player.mob ?: return null
+            val mob = player.mobEgg ?: return null
 
             return MobReward(mob)
         }
