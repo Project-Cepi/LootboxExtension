@@ -43,7 +43,7 @@ $dokka.location:world.cepi.crates.rewards/ItemReward/item/#/PointingToDeclaratio
 $dokka.location:world.cepi.crates.rewards/MobReward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/-companion/index.html
 $dokka.location:world.cepi.crates.rewards/MobReward.Companion/generateReward/#net.minestom.server.command.CommandSender#kotlin.collections.List[kotlin.Any]/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/-companion/generate-reward.html
 $dokka.location:world.cepi.crates.rewards/MobReward///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/index.html
-$dokka.location:world.cepi.crates.rewards/MobReward/MobReward/#world.cepi.mobextension.Mob/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/-mob-reward.html
+$dokka.location:world.cepi.crates.rewards/MobReward/MobReward/#world.cepi.mob.mob.Mob/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/-mob-reward.html
 $dokka.location:world.cepi.crates.rewards/MobReward/dispatch/#net.minestom.server.entity.Player#world.cepi.crates.model.LootCrate#net.minestom.server.instance.Instance#net.minestom.server.utils.BlockPosition/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/dispatch.html
 $dokka.location:world.cepi.crates.rewards/MobReward/mob/#/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-mob-reward/mob.html
 $dokka.location:world.cepi.crates.rewards/Reward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/-companion/index.html
