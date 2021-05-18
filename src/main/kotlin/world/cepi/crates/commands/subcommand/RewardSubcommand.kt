@@ -25,7 +25,7 @@ internal object RewardSubcommand : Command("reward") {
 
             addSyntax(
                 LootcrateCommand.existingLootCrate,
-                reward.simpleName!!.dropLast("Reward".length).toLowerCase().literal(),
+                reward.simpleName!!.dropLast("Reward".length).lowercase().literal(),
                 *arguments.toTypedArray()
             ) { sender, args ->
                 val crate = args.get(LootcrateCommand.existingLootCrate)
@@ -41,7 +41,7 @@ internal object RewardSubcommand : Command("reward") {
                 sender.sendFormattedTranslatableMessage(
                     "lootcrate",
                     "reward.add",
-                    Component.text(reward.simpleName!!.dropLast("Reward".length).toLowerCase(), NamedTextColor.BLUE),
+                    Component.text(reward.simpleName!!.dropLast("Reward".length).lowercase(), NamedTextColor.BLUE),
                     Component.text(crate.name, NamedTextColor.YELLOW)
                 )
             }
