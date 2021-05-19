@@ -55,6 +55,9 @@ dependencies {
 
     // Add mobs
     compileOnly("com.github.Project-Cepi:MobExtension:2f477c2d75")
+
+    // Add economy
+    compileOnly("com.github.Project-Cepi:EconomyExtension:c4bc1b2484")
 }
 
 tasks.withType<Test> {

@@ -1,11 +1,12 @@
 {
   "entrypoint": "world.cepi.crates.LootboxExtension",
   "name": "CratesExtension",
-  "version": "1.0.0-EXAMPLE",
+  "version": "1.0.0",
   "dependencies": [
     "LevelExtension",
     "MobExtension",
     "ItemExtension",
+    "EconomyExtension",
     "Kepi"
   ]
 }

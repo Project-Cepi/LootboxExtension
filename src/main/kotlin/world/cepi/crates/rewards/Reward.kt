@@ -8,17 +8,15 @@ import net.minestom.server.utils.BlockPosition
 import world.cepi.crates.model.LootCrate
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance
+import kotlin.reflect.full.isSubclassOf
 
 sealed interface Reward {
 
     fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component
 
     companion object {
-        internal val rewards: Array<Pair<KClass<out Reward>, RewardGenerator<*>>> = arrayOf(
-            XPReward::class to XPReward::class.companionObjectInstance as RewardGenerator<*>,
-            ItemReward::class to ItemReward::class.companionObjectInstance as RewardGenerator<*>,
-            MobReward::class to MobReward::class.companionObjectInstance as RewardGenerator<*>,
-            TeleportReward::class to TeleportReward::class.companionObjectInstance as RewardGenerator<*>
-        )
+        internal val rewards: Map<KClass<out Reward>, RewardGenerator<*>> =
+            Reward::class.sealedSubclasses.filter { it.isFinal && it.isSubclassOf(Reward::class) }
+                .associateWith { it.objectInstance as RewardGenerator<*> }
     }
 }

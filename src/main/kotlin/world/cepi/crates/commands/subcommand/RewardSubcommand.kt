@@ -17,8 +17,8 @@ internal object RewardSubcommand : Command("reward") {
 
         Reward.rewards.forEach { rewardPair ->
 
-            val reward = rewardPair.first
-            val generator = rewardPair.second
+            val reward = rewardPair.key
+            val generator = rewardPair.value
 
             val arguments = argumentsFromFunction(reward.primaryConstructor ?: return@forEach)
                 .map { it ?: return@forEach }

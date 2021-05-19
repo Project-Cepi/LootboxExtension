@@ -99,6 +99,6 @@ object LootcrateCommand : Command("lootcrate") {
     }
 
     val rewardNames: List<String>
-        get() = rewards.map { it.first.simpleName ?: "" }
+        get() = rewards.keys.map { it.simpleName ?: "" }
 
 }
