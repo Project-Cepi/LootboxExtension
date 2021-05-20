@@ -16,7 +16,7 @@ sealed interface Reward {
 
     companion object {
         internal val rewards: Map<KClass<out Reward>, RewardGenerator<*>> =
-            Reward::class.sealedSubclasses.filter { it.isFinal && it.isSubclassOf(Reward::class) }
+            Reward::class.sealedSubclasses.filter { it.isFinal }
                 .associateWith { it.objectInstance as RewardGenerator<*> }
     }
 }

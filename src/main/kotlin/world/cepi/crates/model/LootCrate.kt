@@ -4,10 +4,9 @@ import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import net.minestom.server.data.DataImpl
 import net.minestom.server.item.ItemStack
-import net.minestom.server.item.ItemTag
 import net.minestom.server.item.Material
+import net.minestom.server.tag.Tag
 import world.cepi.crates.rewards.Reward
 import world.cepi.kstom.adventure.asMini
 
@@ -30,7 +29,7 @@ data class LootCrate(
                         .append(Component.text(name, NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
                 ))
 
-                meta.set(ItemTag.String(lootKey), name)
+                meta.set(Tag.String(lootKey), name)
             }
         }
         return barrel
