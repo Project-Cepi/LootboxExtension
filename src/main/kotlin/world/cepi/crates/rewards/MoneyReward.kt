@@ -9,7 +9,6 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.math.IntRange
 import world.cepi.crates.model.LootCrate
 import world.cepi.economy.EconomyHandler
-import world.cepi.level.ExperienceManager
 
 class MoneyReward(val money: IntRange) : Reward {
 

@@ -15,10 +15,7 @@ fun dispatchRange(
     target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition,
     lambdaProcessor: (target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition, decidedNumber: Int) -> Component
 ): Component {
-    range.minimum = range.minimum.coerceAtLeast(0)
-    range.maximum = range.maximum.coerceAtMost(Int.MAX_VALUE)
-
-    val decidedNumber = ((range.minimum)..(range.maximum)).random()
+    val decidedNumber = ((range.minimum.coerceAtLeast(0))..(range.maximum.coerceAtMost(Int.MAX_VALUE))).random()
 
     return lambdaProcessor(target, lootcrate, instance, position, decidedNumber)
 }

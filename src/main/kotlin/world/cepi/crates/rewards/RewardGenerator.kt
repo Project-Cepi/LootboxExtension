@@ -5,7 +5,7 @@ import net.minestom.server.command.CommandSender
 /**
  * Companion object superclass to generate a reward
  */
-internal sealed interface RewardGenerator<out R: Reward> {
+sealed interface RewardGenerator<out R: Reward> {
 
     /**
      * Generates a reward from a [CommandSender] and a set of [args]

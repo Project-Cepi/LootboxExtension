@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.Command
 import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.rewards.Reward
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromFunction
 import world.cepi.kstom.command.arguments.literal
@@ -14,6 +15,19 @@ import kotlin.reflect.full.primaryConstructor
 internal object RewardSubcommand : Command("reward") {
 
     init {
+
+        applyHelp(
+            """
+                Rewards allow the breakers to have effects applied
+                to them once the crate is broken.
+                
+                Add a reward by doing:
+                <yellow>/${name} reward (id) (reward) (...args)
+                
+                For example, XP has the arguments
+                (min)..(max) -- like 1..5
+            """.trimIndent()
+        )
 
         Reward.rewards.forEach { rewardPair ->
 
