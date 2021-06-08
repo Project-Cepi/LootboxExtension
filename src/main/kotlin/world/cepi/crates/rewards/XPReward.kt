@@ -10,7 +10,7 @@ import net.minestom.server.utils.math.IntRange
 import world.cepi.crates.model.LootCrate
 import world.cepi.level.ExperienceManager
 
-class XPReward(val xp: IntRange) : Reward() {
+class XPReward(val xp: IntRange) : Reward {
 
     override fun dispatch(
         target: Player,

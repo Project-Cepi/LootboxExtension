@@ -12,8 +12,7 @@ import kotlin.reflect.full.companionObject
 import kotlin.reflect.full.companionObjectInstance
 import kotlin.reflect.full.isSubclassOf
 
-@Serializable
-sealed class Reward {
+sealed interface Reward {
 
     abstract fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component
 

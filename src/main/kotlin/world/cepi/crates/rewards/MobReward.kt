@@ -9,7 +9,7 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 
-class MobReward(val mob: Mob) : Reward() {
+class MobReward(val mob: Mob) : Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         val creature = mob.generateMob() ?: return Component.empty()
