@@ -78,21 +78,22 @@ object LootcrateCommand : Command("lootcrate") {
         }
 
         addSubcommand(Help(
-            Component.text("First, create a lootcrate by doing:"),
-            Component.empty()
-                .append(Component.text("/${getName()} create <id>", NamedTextColor.YELLOW)),
-            Component.space(),
-            Component.text("You can check the info of a crate or add a reward."),
-            Component.space(),
-            Component.text("Add a reward by doing:"),
-            Component.empty()
-                .append(Component.text("/${getName()} reward <id> <reward> <args>", NamedTextColor.YELLOW)),
-            Component.space(),
-            Component.text("For example, XP has the arguments ")
-                .append(Component.text("<min>..<max>", NamedTextColor.BLUE)),
-            Component.text("Finally, grab the lootcrate by using"),
-            Component.empty()
-                .append(Component.text("/${getName()} get <id>", NamedTextColor.YELLOW)),
+            """
+                First, create a lootcrate by doing:
+                <yellow>$name create (id)
+                
+                You can check of the info of a crate or add a reward
+                
+                Add a reward by doing:
+                <yellow>$name reward (id) (reward) (...args)
+                
+                For example, XP has the arguments
+                (min)..(max) -- like 1..5
+                
+                Finally, grab the lootcrate by using
+                <yellow>$name get (id)
+                And place it down anywhere you wish.
+            """.trimIndent()
         ))
 
         addSubcommand(RewardSubcommand)
