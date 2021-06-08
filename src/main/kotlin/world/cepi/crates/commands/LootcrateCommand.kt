@@ -85,7 +85,7 @@ object LootcrateCommand : Command("lootcrate") {
         applyHelp(
             """
                 First, create a lootcrate by doing:
-                <yellow>$name create (id)
+                <yellow>${getName()} create (id)
                 
                 You can check of the info of a crate or add a reward
                 
