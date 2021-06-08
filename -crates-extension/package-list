@@ -48,8 +48,11 @@ $dokka.location:world.cepi.crates.rewards/MoneyReward/MoneyReward/#net.minestom.
 $dokka.location:world.cepi.crates.rewards/MoneyReward/dispatch/#net.minestom.server.entity.Player#world.cepi.crates.model.LootCrate#net.minestom.server.instance.Instance#net.minestom.server.utils.BlockPosition/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-money-reward/dispatch.html
 $dokka.location:world.cepi.crates.rewards/MoneyReward/money/#/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-money-reward/money.html
 $dokka.location:world.cepi.crates.rewards/Reward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/-companion/index.html
+$dokka.location:world.cepi.crates.rewards/Reward.Companion/rewards/#/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/-companion/rewards.html
 $dokka.location:world.cepi.crates.rewards/Reward///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/index.html
 $dokka.location:world.cepi.crates.rewards/Reward/dispatch/#net.minestom.server.entity.Player#world.cepi.crates.model.LootCrate#net.minestom.server.instance.Instance#net.minestom.server.utils.BlockPosition/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward/dispatch.html
+$dokka.location:world.cepi.crates.rewards/RewardGenerator///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward-generator/index.html
+$dokka.location:world.cepi.crates.rewards/RewardGenerator/generateReward/#net.minestom.server.command.CommandSender#kotlin.collections.List[kotlin.Any]/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-reward-generator/generate-reward.html
 $dokka.location:world.cepi.crates.rewards/TeleportReward.Companion///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-teleport-reward/-companion/index.html
 $dokka.location:world.cepi.crates.rewards/TeleportReward.Companion/generateReward/#net.minestom.server.command.CommandSender#kotlin.collections.List[kotlin.Any]/PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-teleport-reward/-companion/generate-reward.html
 $dokka.location:world.cepi.crates.rewards/TeleportReward///PointingToDeclaration/-crates-extension/world.cepi.crates.rewards/-teleport-reward/index.html
