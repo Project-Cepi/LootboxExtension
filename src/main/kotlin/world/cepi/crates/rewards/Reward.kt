@@ -20,7 +20,6 @@ sealed class Reward {
     companion object {
         internal val rewards =
             Reward::class.sealedSubclasses
-                .onEach { println(it.companionObject) }
                 .filter { it.companionObjectInstance is RewardGenerator<*> }
                 .associateWith { it.companionObjectInstance as RewardGenerator<*> }
     }
