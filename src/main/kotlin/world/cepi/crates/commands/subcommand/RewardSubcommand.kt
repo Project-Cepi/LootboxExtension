@@ -45,7 +45,7 @@ internal object RewardSubcommand : Command("reward") {
                 val crate = args[LootcrateCommand.existingLootCrate]
                 val constructorArgs: List<Any> = arguments.map { arg -> args[arg] }
 
-                val generatedReward = generator.generateReward(sender, constructorArgs) ?: let {
+                val generatedReward = generator.generateReward(sender, constructorArgs) ?: run {
                     sender.sendFormattedTranslatableMessage("lootcrate", "reward.invalid")
                     return@addSyntax
                 }
