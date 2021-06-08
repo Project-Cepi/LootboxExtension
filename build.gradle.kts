@@ -39,13 +39,13 @@ dependencies {
     compileOnly("com.github.Project-Cepi:Minestom:5ddda986a7")
 
     // Get KStom
-    compileOnly("com.github.Project-Cepi:KStom:ea3624d804")
+    compileOnly("com.github.Project-Cepi:KStom:75fbdfb108")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:12349e0470")
+    compileOnly("com.github.Project-Cepi:Kepi:3371e1a411")
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
@@ -58,6 +58,9 @@ dependencies {
 
     // Add economy
     compileOnly("com.github.Project-Cepi:EconomyExtension:c4bc1b2484")
+
+    // Use the JUpiter test library.
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
 tasks.withType<Test> {
@@ -83,5 +86,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "11" }
-val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = "11" }
+val compileKotlin: KotlinCompile by tasks
+
+configurations {
+    testImplementation {
+        extendsFrom(configurations.compileOnly.get())
+    }
+}

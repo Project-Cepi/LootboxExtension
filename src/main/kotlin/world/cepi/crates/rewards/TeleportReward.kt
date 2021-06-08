@@ -8,7 +8,7 @@ import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.location.RelativeVec
 import world.cepi.crates.model.LootCrate
 
-class TeleportReward(val relativeVec: RelativeVec): Reward {
+class TeleportReward(val relativeVec: RelativeVec): Reward() {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
 

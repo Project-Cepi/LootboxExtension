@@ -10,7 +10,7 @@ import world.cepi.itemextension.item.Item
 import world.cepi.itemextension.item.traits.list.NameTrait
 import world.cepi.kstom.item.get
 
-class ItemReward(val item: Item, val amount: Int): Reward {
+class ItemReward(val item: Item, val amount: Int): Reward() {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         target.inventory.addItemStack(item.renderItem(amount))

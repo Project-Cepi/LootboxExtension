@@ -13,7 +13,7 @@ import kotlin.reflect.full.primaryConstructor
 sealed class RangeReward(
     private val range: IntRange,
     val lambdaProcessor: (target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition, decidedNumber: Int) -> Component
-): Reward {
+): Reward() {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         range.minimum = range.minimum.coerceAtLeast(0)

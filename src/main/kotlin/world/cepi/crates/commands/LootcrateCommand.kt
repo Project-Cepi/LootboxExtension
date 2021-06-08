@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.exception.ArgumentSyntaxException
+import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.commands.subcommand.RewardSubcommand
@@ -14,8 +15,10 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
+import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
+import world.cepi.kstom.command.arguments.suggest
 import world.cepi.kstom.command.setArgumentCallback
 
 object LootcrateCommand : Command("lootcrate") {
@@ -29,6 +32,8 @@ object LootcrateCommand : Command("lootcrate") {
     val existingLootCrate = ArgumentType.Word("crate").map { name ->
         LootboxExtension.crates.firstOrNull { it.name == name }
             ?: throw ArgumentSyntaxException("Invalid crate", name, 1)
+    }.suggest { sender, context ->
+        LootboxExtension.crates.map { SuggestionEntry(it.name) }.toMutableList()
     }
 
     private val create = "create".literal()
@@ -77,7 +82,7 @@ object LootcrateCommand : Command("lootcrate") {
             }
         }
 
-        addSubcommand(Help(
+        applyHelp(
             """
                 First, create a lootcrate by doing:
                 <yellow>$name create (id)
@@ -85,16 +90,16 @@ object LootcrateCommand : Command("lootcrate") {
                 You can check of the info of a crate or add a reward
                 
                 Add a reward by doing:
-                <yellow>$name reward (id) (reward) (...args)
+                <yellow>/${getName()} reward (id) (reward) (...args)
                 
                 For example, XP has the arguments
                 (min)..(max) -- like 1..5
                 
                 Finally, grab the lootcrate by using
-                <yellow>$name get (id)
+                <yellow>/${getName()} get (id)
                 And place it down anywhere you wish.
             """.trimIndent()
-        ))
+        )
 
         addSubcommand(RewardSubcommand)
     }

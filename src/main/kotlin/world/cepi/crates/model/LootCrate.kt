@@ -16,24 +16,24 @@ data class LootCrate(
     val rewards: MutableList<Reward> = mutableListOf()
 ) {
 
-    fun toItem(): ItemStack {
-        val barrel = ItemStack.of(Material.CHEST).with {
+    fun toItem(): ItemStack = ItemStack.of(Material.CHEST).with {
 
-            it.meta { meta ->
+        it.meta { meta ->
 
-                meta.displayName("<gradient:yellow:gold>Loot Crate".asMini().decoration(TextDecoration.ITALIC, false))
+            meta.displayName("<gradient:yellow:gold>Loot Crate".asMini().decoration(TextDecoration.ITALIC, false))
 
-                meta.lore(arrayListOf<Component>(
+            meta.lore(
+                arrayListOf<Component>(
                     Component.space(),
                     Component.text("ID: ", NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)
                         .append(Component.text(name, NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false))
-                ))
+                )
+            )
 
-                meta.set(Tag.String(lootKey), name)
-            }
+            meta.set(Tag.String(lootKey), name)
         }
-        return barrel
     }
+
 
     companion object {
         const val lootKey = "cepi-lootcrate"
