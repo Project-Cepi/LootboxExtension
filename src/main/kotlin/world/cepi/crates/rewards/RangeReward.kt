@@ -10,30 +10,15 @@ import net.minestom.server.utils.math.IntRange
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-sealed class RangeReward(
-    private val range: IntRange,
-    val lambdaProcessor: (target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition, decidedNumber: Int) -> Component
-): Reward() {
+fun dispatchRange(
+    range: IntRange,
+    target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition,
+    lambdaProcessor: (target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition, decidedNumber: Int) -> Component
+): Component {
+    range.minimum = range.minimum.coerceAtLeast(0)
+    range.maximum = range.maximum.coerceAtMost(Int.MAX_VALUE)
 
-    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
-        range.minimum = range.minimum.coerceAtLeast(0)
-        range.maximum = range.maximum.coerceAtMost(Int.MAX_VALUE)
+    val decidedNumber = ((range.minimum)..(range.maximum)).random()
 
-        val decidedNumber = ((range.minimum)..(range.maximum)).random()
-
-        return lambdaProcessor(target, lootcrate, instance, position, decidedNumber)
-    }
-
-}
-
-sealed class RangeRewardGenerator<R: RangeReward>(val clazz: KClass<R>): RewardGenerator<R> {
-    override fun generateReward(sender: CommandSender, args: List<Any>): R? {
-
-        if (args.isEmpty()) return null
-
-        val intRange = args[0] as? IntRange ?: return null
-
-        return clazz.primaryConstructor!!.call(intRange)
-
-    }
+    return lambdaProcessor(target, lootcrate, instance, position, decidedNumber)
 }

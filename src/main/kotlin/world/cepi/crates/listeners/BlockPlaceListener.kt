@@ -10,21 +10,21 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.data.data
 
-fun onBlockPlace(event: PlayerBlockPlaceEvent) {
+fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
 
-    val item = event.player.getItemInHand(event.hand)
+    val item = player.getItemInHand(hand)
 
     val lootcrateName = item.meta.getTag(Tag.String(LootCrate.lootKey)) ?: return
 
     if (item.material == Material.CHEST) {
-        event.setCustomBlock(LootCrate.lootKey)
+        setCustomBlock(LootCrate.lootKey)
 
         val data = data {
             this[LootCrate.lootKey] = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return@data
         }
 
-        event.blockData = data
+        blockData = data
 
-        event.player.sendFormattedTranslatableMessage("lootcrate", "place", Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE))
+        player.sendFormattedTranslatableMessage("lootcrate", "place", Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE))
     }
 }

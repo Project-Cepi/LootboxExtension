@@ -28,8 +28,8 @@ internal object RewardSubcommand : Command("reward") {
                 reward.simpleName!!.dropLast("Reward".length).lowercase().literal(),
                 *arguments.toTypedArray()
             ) { sender, args ->
-                val crate = args.get(LootcrateCommand.existingLootCrate)
-                val constructorArgs: List<Any> = arguments.map { arg -> args.get(arg) }
+                val crate = args[LootcrateCommand.existingLootCrate]
+                val constructorArgs: List<Any> = arguments.map { arg -> args[arg] }
 
                 val generatedReward = generator.generateReward(sender, constructorArgs) ?: let {
                     sender.sendFormattedTranslatableMessage("lootcrate", "reward.invalid")
