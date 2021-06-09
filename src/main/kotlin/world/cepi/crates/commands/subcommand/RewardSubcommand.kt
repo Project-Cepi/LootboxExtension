@@ -16,19 +16,6 @@ internal object RewardSubcommand : Command("reward") {
 
     init {
 
-        applyHelp(
-            """
-                Rewards allow the breakers to have effects applied
-                to them once the crate is broken.
-                
-                Add a reward by doing:
-                <yellow>/${name} reward (id) (reward) (...args)
-                
-                For example, XP has the arguments
-                (min)..(max) -- like 1..5
-            """.trimIndent()
-        )
-
         Reward.rewards.forEach { rewardPair ->
 
             val reward = rewardPair.key

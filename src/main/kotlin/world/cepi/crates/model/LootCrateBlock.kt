@@ -17,6 +17,9 @@ import net.minestom.server.utils.time.TimeUnit
 import net.minestom.server.utils.time.UpdateOption
 import org.apache.logging.log4j.util.Strings
 import world.cepi.kstom.Manager
+import world.cepi.kstom.util.component1
+import world.cepi.kstom.util.component2
+import world.cepi.kstom.util.component3
 
 object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
@@ -38,7 +41,7 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
     ): Int {
 
         player.playSound(Sound.sound(
-            SoundEvent.BLOCK_NOTE_BLOCK_PLING,
+            SoundEvent.NOTE_BLOCK_PLING,
             Sound.Source.PLAYER,
             1f,
             .5f + (.15f * stage)
@@ -52,12 +55,14 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
 
         breakingMap[position]?.keys?.forEach {
 
+            val (x, y, z) = position
+
             it.playSound(Sound.sound(
-                SoundEvent.BLOCK_NOTE_BLOCK_PLING,
+                SoundEvent.NOTE_BLOCK_PLING,
                 Sound.Source.PLAYER,
                 1f,
                 2f
-            ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
+            ), x.toDouble(), y.toDouble(), z.toDouble())
 
             if (loot.rewards.isNotEmpty())
                 it.sendMessage(Component.text("Loot crate opened: ", NamedTextColor.GREEN))

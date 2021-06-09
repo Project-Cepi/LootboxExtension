@@ -37,6 +37,6 @@ data class LootCrate(
 
     companion object {
         const val lootKey = "cepi-lootcrate"
-        const val blockID = 18372.toShort()
+        const val blockID = 1837.toShort()
     }
 }
