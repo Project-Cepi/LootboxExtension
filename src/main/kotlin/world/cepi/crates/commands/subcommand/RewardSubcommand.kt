@@ -22,7 +22,7 @@ internal object RewardSubcommand : Command("reward") {
             val generator = rewardPair.value
 
             val arguments = argumentsFromFunction(reward.primaryConstructor ?: return@forEach)
-                .map { it ?: return@forEach }
+                .filterNotNull()
 
             addSyntax(
                 LootcrateCommand.existingLootCrate,
