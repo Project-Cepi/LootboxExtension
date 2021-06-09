@@ -32,7 +32,7 @@ object LootcrateCommand : Command("lootcrate") {
     val existingLootCrate = ArgumentType.Word("crate").map { name ->
         LootboxExtension.crates.firstOrNull { it.name == name }
             ?: throw ArgumentSyntaxException("Invalid crate", name, 1)
-    }.suggest { sender, context ->
+    }.suggest { _, _ ->
         LootboxExtension.crates.map { SuggestionEntry(it.name) }.toMutableList()
     }
 
@@ -48,10 +48,6 @@ object LootcrateCommand : Command("lootcrate") {
 
         setArgumentCallback(existingLootCrate) { sender, exception ->
             sender.sendFormattedTranslatableMessage("lootcrate", "exists.not", Component.text(exception.input, NamedTextColor.BLUE))
-        }
-
-        addSyntax { sender ->
-            sender.sendFormattedTranslatableMessage("common", "usage", Component.text("/lootboxes create|get|list|info|reward <args>"))
         }
 
         addSyntax(create, name) { sender, args ->
