@@ -13,9 +13,8 @@ import world.cepi.crates.LootboxExtension
 import world.cepi.crates.commands.subcommand.RewardSubcommand
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
+import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kepi.subcommands.Help
-import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.arguments.suggest
@@ -78,7 +77,7 @@ object LootcrateCommand : Command("lootcrate") {
             }
         }
 
-        applyHelp(
+        applyHelp {
             """
                 First, create a lootcrate by doing:
                 <yellow>${getName()} create (id)
@@ -95,7 +94,7 @@ object LootcrateCommand : Command("lootcrate") {
                 <yellow>/${getName()} get (id)
                 And place it down anywhere you wish.
             """.trimIndent()
-        )
+        }
 
         addSubcommand(RewardSubcommand)
     }
