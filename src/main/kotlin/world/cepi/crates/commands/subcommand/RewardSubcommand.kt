@@ -6,7 +6,6 @@ import net.minestom.server.command.builder.Command
 import world.cepi.crates.commands.LootcrateCommand
 import world.cepi.crates.rewards.Reward
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.argumentsFromFunction
 import world.cepi.kstom.command.arguments.literal
