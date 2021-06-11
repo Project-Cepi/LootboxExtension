@@ -10,17 +10,14 @@ import world.cepi.crates.model.LootCrateBlock
 import world.cepi.kstom.Manager
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
+import world.cepi.kstom.event.listenOnly
 import java.io.File
 
 class LootboxExtension : Extension() {
 
-    val playerInitialization: (Player) -> Unit = {
-        it.addEventCallback(PlayerBlockPlaceEvent::class.java, ::onBlockPlace)
-    }
-
     override fun initialize() {
 
-        Manager.connection.addPlayerInitialization(playerInitialization)
+        eventNode.listenOnly(::onBlockPlace)
 
         Manager.block.registerCustomBlock(LootCrateBlock)
 
@@ -30,8 +27,6 @@ class LootboxExtension : Extension() {
     }
 
     override fun terminate() {
-
-        Manager.connection.removePlayerInitialization(playerInitialization)
 
         LootcrateCommand.unregister()
 
