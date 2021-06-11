@@ -15,7 +15,7 @@ class ItemReward(val item: Item, val amount: Int): Reward {
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         target.inventory.addItemStack(item.renderItem(amount))
 
-        return Component.text("$amount ${item.getTrait<NameTrait>()?.name ?: "Item"}!")
+        return Component.text("$amount ${item.get<NameTrait>()?.name ?: "Item"}!")
             .hoverEvent(item.renderItem(amount).asHoverEvent())
 
     }
