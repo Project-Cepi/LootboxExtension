@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import net.minestom.server.data.Data
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
@@ -77,7 +77,7 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
                     Component.text("An internal error occured", NamedTextColor.RED)
                 }
 
-                if (PlainComponentSerializer.plain().serialize(message) != Strings.EMPTY) {
+                if (PlainTextComponentSerializer.plainText().serialize(message) != Strings.EMPTY) {
                     it.key.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
                         .append(Component.space())
                         .append(message.color(NamedTextColor.GRAY)))
