@@ -47,7 +47,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")
 
     // Add items
-    compileOnly("com.github.Project-Cepi:ItemExtension:216f3b6f3c")
+    compileOnly("com.github.Project-Cepi:ItemExtension:ae19f9e432")
 
     // Add mobs
     compileOnly("com.github.Project-Cepi:MobExtension:2f477c2d75")
