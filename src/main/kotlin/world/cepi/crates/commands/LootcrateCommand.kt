@@ -38,6 +38,7 @@ object LootcrateCommand : Command("lootcrate") {
     private val create = "create".literal()
     private val get = "get".literal()
     private val list = "list".literal()
+    private val info = "info".literal()
 
     init {
 
@@ -61,6 +62,12 @@ object LootcrateCommand : Command("lootcrate") {
 
             player.inventory.addItemStack(crate.toItem())
 
+        }
+
+        addSyntax(info, existingLootCrate) { sender, args ->
+            val crate = args.get(existingLootCrate)
+
+            sender.sendMessage("")
         }
 
         addSyntax(list) { sender ->
