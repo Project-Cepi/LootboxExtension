@@ -7,6 +7,7 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
 import world.cepi.crates.model.LootCrate
 import world.cepi.itemextension.item.Item
+import world.cepi.itemextension.item.itemSerializationModule
 import world.cepi.itemextension.item.traits.list.NameTrait
 import world.cepi.kstom.command.arguments.annotations.DefaultNumber
 import world.cepi.kstom.item.get
@@ -26,7 +27,7 @@ class ItemReward(val item: Item, @DefaultNumber(1.0) val amount: Int): Reward {
 
             val player = sender as? Player ?: return null
 
-            val item = player.itemInMainHand.meta.get<Item>(Item.key) ?: return null
+            val item = player.itemInMainHand.meta.get<Item>(Item.key, itemSerializationModule) ?: return null
 
             return ItemReward(item, player.itemInMainHand.amount)
         }
