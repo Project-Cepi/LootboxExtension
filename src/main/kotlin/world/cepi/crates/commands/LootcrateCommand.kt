@@ -15,9 +15,9 @@ import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.arguments.suggest
+import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.setArgumentCallback
 
 object LootcrateCommand : Command("lootcrate") {
@@ -42,21 +42,21 @@ object LootcrateCommand : Command("lootcrate") {
 
     init {
 
-        setArgumentCallback(name) { sender, exception ->
+        setArgumentCallback(name) {
             sender.sendFormattedTranslatableMessage("lootcrate", "exists", Component.text(exception.input, NamedTextColor.BLUE))
         }
 
-        setArgumentCallback(existingLootCrate) { sender, exception ->
+        setArgumentCallback(existingLootCrate) {
             sender.sendFormattedTranslatableMessage("lootcrate", "exists.not", Component.text(exception.input, NamedTextColor.BLUE))
         }
 
-        addSyntax(create, name) { sender, args ->
-            LootboxExtension.crates.add(LootCrate(args.get(name)))
-            sender.sendFormattedTranslatableMessage("lootcrate", "added", Component.text(args.get(name), NamedTextColor.BLUE))
+        addSyntax(create, name) {
+            LootboxExtension.crates.add(LootCrate(context[name]))
+            sender.sendFormattedTranslatableMessage("lootcrate", "added", Component.text(context[name], NamedTextColor.BLUE))
         }
 
-        addSyntax(get, existingLootCrate) { sender, args ->
-            val crate = args.get(existingLootCrate)
+        addSyntax(get, existingLootCrate) {
+            val crate = context[existingLootCrate]
 
             val player = sender as Player
 
@@ -64,13 +64,13 @@ object LootcrateCommand : Command("lootcrate") {
 
         }
 
-        addSyntax(info, existingLootCrate) { sender, args ->
-            val crate = args.get(existingLootCrate)
+        addSyntax(info, existingLootCrate) {
+            val crate = context[existingLootCrate]
 
             sender.sendMessage("")
         }
 
-        addSyntax(list) { sender ->
+        addSyntax(list) {
             LootboxExtension.crates.forEach {
                 sender.sendMessage(
                     Component.text("-", NamedTextColor.DARK_GRAY)
