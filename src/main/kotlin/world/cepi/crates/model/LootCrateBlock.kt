@@ -11,6 +11,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.block.CustomBlock
+import net.minestom.server.particle.Particle
 import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
@@ -77,7 +78,7 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
                     Component.text("An internal error occured", NamedTextColor.RED)
                 }
 
-                if (PlainTextComponentSerializer.plainText().serialize(message) != Strings.EMPTY) {
+                if (message != Component.empty()) {
                     it.key.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
                         .append(Component.space())
                         .append(message.color(NamedTextColor.GRAY)))
@@ -101,6 +102,13 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
     }
 
     override fun update(instance: Instance, blockPosition: BlockPosition, data: Data?) {
+
+        // TODO cool particle at top
+//        if (data!!.get<Int>("anim") ?: 0 == 0) {
+//            data.set("anim", 10)
+//        } else
+//            data.set("anim", data.get<Int>("anim")!! - 0)
+
         if (breakingMap[blockPosition] == null) breakingMap[blockPosition] = Object2IntOpenHashMap()
         val internalMap = breakingMap[blockPosition]!!
 

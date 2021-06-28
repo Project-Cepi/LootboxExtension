@@ -20,9 +20,8 @@ class XPReward(val xp: IntRange) : Reward {
     ): Component {
         return dispatchRange(xp, target, lootcrate, instance, position) { player, _, _, _, decidedXP, ->
             ExperienceManager.addExperience(player, decidedXP)
-            Component.empty()
-                .append(Component.text(decidedXP, NamedTextColor.BLUE)
-                    .append(Component.space()))
+            Component.text(decidedXP, NamedTextColor.BLUE)
+                .append(Component.space())
                 .append(Component.text("XP", NamedTextColor.GRAY))
 
         }

@@ -20,9 +20,8 @@ class MoneyReward(val money: IntRange) : Reward {
     ): Component {
         return dispatchRange(money, target, lootcrate, instance, position) { player, _, _, _, decidedMoney, ->
             EconomyHandler[player] += decidedMoney.toLong()
-            Component.empty()
-                .append(Component.text(decidedMoney, NamedTextColor.BLUE)
-                    .append(Component.space()))
+            Component.text(decidedMoney, NamedTextColor.BLUE)
+                .append(Component.space())
                 .append(Component.text("Coins", NamedTextColor.GRAY)) // TODO move to currency name
 
         }
