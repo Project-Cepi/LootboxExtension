@@ -15,8 +15,7 @@ class MobReward(val mob: Mob) : Reward {
         val creature = mob.generateMob() ?: return Component.empty()
         creature.setInstance(instance, position.toPosition())
 
-        return Component.empty()
-
+        return generateComponent()
     }
 
     companion object: RewardGenerator<MobReward> {

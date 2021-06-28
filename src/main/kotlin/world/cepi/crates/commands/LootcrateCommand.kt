@@ -14,6 +14,7 @@ import world.cepi.crates.commands.subcommand.RewardSubcommand
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kepi.command.subcommand.applyHelp
+import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.arguments.suggest
@@ -67,7 +68,7 @@ object LootcrateCommand : Command("lootcrate") {
         addSyntax(info, existingLootCrate) {
             val crate = context[existingLootCrate]
 
-            sender.sendMessage("")
+            crate.rewards.forEach { sender.sendMessage(it.formattedComponent) }
         }
 
         addSyntax(list) {

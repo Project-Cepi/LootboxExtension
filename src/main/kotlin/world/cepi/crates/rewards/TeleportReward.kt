@@ -11,10 +11,9 @@ import world.cepi.crates.model.LootCrate
 class TeleportReward(val relativeVec: RelativeVec): Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
-
         target.teleport(relativeVec.from(position.toPosition()).toPosition())
 
-        return Component.empty()
+        return generateComponent()
     }
 
     companion object: RewardGenerator<TeleportReward> {

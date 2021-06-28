@@ -27,6 +27,12 @@ class XPReward(val xp: IntRange) : Reward {
         }
     }
 
+    override fun generateComponent(): Component {
+        return Component.text("${xp.minimum} - ${xp.maximum}", NamedTextColor.BLUE)
+            .append(Component.space())
+            .append(Component.text("XP", NamedTextColor.GRAY))
+    }
+
     companion object: RewardGenerator<XPReward> {
         override fun generateReward(sender: CommandSender, args: List<Any>): XPReward? {
 

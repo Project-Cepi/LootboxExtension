@@ -27,6 +27,12 @@ class MoneyReward(val money: IntRange) : Reward {
         }
     }
 
+    override fun generateComponent(): Component {
+        return Component.text("${money.minimum} - ${money.maximum}", NamedTextColor.BLUE)
+            .append(Component.space())
+            .append(Component.text("Coins", NamedTextColor.GRAY))
+    }
+
     companion object: RewardGenerator<MoneyReward> {
         override fun generateReward(sender: CommandSender, args: List<Any>): MoneyReward? {
 
