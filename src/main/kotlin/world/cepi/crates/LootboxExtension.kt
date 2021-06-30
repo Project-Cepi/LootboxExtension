@@ -1,9 +1,7 @@
 package world.cepi.crates
 
-import net.minestom.server.entity.Player
-import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.extensions.Extension
-import world.cepi.crates.commands.LootcrateCommand
+import world.cepi.crates.commands.LootCrateCommand
 import world.cepi.crates.listeners.onBlockPlace
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.model.LootCrateBlock
@@ -11,7 +9,6 @@ import world.cepi.kstom.Manager
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
 import world.cepi.kstom.event.listenOnly
-import java.io.File
 
 class LootboxExtension : Extension() {
 
@@ -21,14 +18,14 @@ class LootboxExtension : Extension() {
 
         Manager.block.registerCustomBlock(LootCrateBlock)
 
-        LootcrateCommand.register()
+        LootCrateCommand.register()
 
         logger.info("[CratesExtension] has been enabled!")
     }
 
     override fun terminate() {
 
-        LootcrateCommand.unregister()
+        LootCrateCommand.unregister()
 
         logger.info("[CratesExtension] has been disabled!")
     }

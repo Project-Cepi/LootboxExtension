@@ -27,7 +27,7 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
     private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
 
     override fun onPlace(instance: Instance, blockPosition: BlockPosition, data: Data?) {
-
+        if (data!!.hasKey("block")) instance.refreshBlockStateId(blockPosition, data.get<Short>("block")!!)
     }
 
     override fun enableMultiPlayerBreaking() = true
@@ -122,7 +122,7 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
         }
 
         getBreakers(instance, blockPosition)?.forEach { player ->
-            internalMap[player] = 20
+            internalMap[player] = data?.get<Int>("ticks") ?: 20
         }
     }
 }

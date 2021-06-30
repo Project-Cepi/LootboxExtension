@@ -19,12 +19,19 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
     if (item.material == Material.CHEST) {
         setCustomBlock(LootCrate.lootKey)
 
+        val crate = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return
+
         val data = data {
-            this[LootCrate.lootKey] = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return@data
+            this[LootCrate.lootKey] = crate
         }
+
+        crate.applyMeta(data)
 
         blockData = data
 
-        player.sendFormattedTranslatableMessage("lootcrate", "place", Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE))
+        player.sendFormattedTranslatableMessage(
+            "lootcrate", "place",
+            Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE)
+        )
     }
 }

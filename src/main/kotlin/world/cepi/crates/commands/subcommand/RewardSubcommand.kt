@@ -3,7 +3,7 @@ package world.cepi.crates.commands.subcommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
-import world.cepi.crates.commands.LootcrateCommand
+import world.cepi.crates.commands.LootCrateCommand
 import world.cepi.crates.rewards.Reward
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
@@ -24,11 +24,11 @@ internal object RewardSubcommand : Command("reward") {
                 .filterNotNull()
 
             addSyntax(
-                LootcrateCommand.existingLootCrate,
+                LootCrateCommand.existingLootCrate,
                 reward.simpleName!!.dropLast("Reward".length).lowercase().literal(),
                 *arguments.toTypedArray()
             ) {
-                val crate = context[LootcrateCommand.existingLootCrate]
+                val crate = context[LootCrateCommand.existingLootCrate]
                 val constructorArgs: List<Any> = arguments.map { arg -> context[arg] }
 
                 val generatedReward = generator.generateReward(sender, constructorArgs) ?: run {

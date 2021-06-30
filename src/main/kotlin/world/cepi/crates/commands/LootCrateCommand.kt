@@ -10,18 +10,20 @@ import net.minestom.server.command.builder.exception.ArgumentSyntaxException
 import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
 import world.cepi.crates.LootboxExtension
+import world.cepi.crates.commands.subcommand.MetaSubcommand
 import world.cepi.crates.commands.subcommand.RewardSubcommand
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.rewards.Reward.Companion.rewards
 import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.command.addSubcommands
 import world.cepi.kstom.command.arguments.literal
 import world.cepi.kstom.command.arguments.suggest
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.setArgumentCallback
 
-object LootcrateCommand : Command("lootcrate") {
+object LootCrateCommand : Command("lootcrate") {
 
     val name = ArgumentType.Word("name").map { name ->
         val crate = LootboxExtension.crates.firstOrNull { it.name == name }
@@ -32,8 +34,8 @@ object LootcrateCommand : Command("lootcrate") {
     val existingLootCrate = ArgumentType.Word("crate").map { name ->
         LootboxExtension.crates.firstOrNull { it.name == name }
             ?: throw ArgumentSyntaxException("Invalid crate", name, 1)
-    }.suggest { _, _ ->
-        LootboxExtension.crates.map { SuggestionEntry(it.name) }.toMutableList()
+    }.suggest {
+        LootboxExtension.crates.map { it.name }
     }
 
     private val create = "create".literal()
@@ -104,10 +106,7 @@ object LootcrateCommand : Command("lootcrate") {
             """.trimIndent()
         }
 
-        addSubcommand(RewardSubcommand)
+        addSubcommands(RewardSubcommand, MetaSubcommand)
     }
-
-    val rewardNames: List<String>
-        get() = rewards.keys.map { it.simpleName ?: "" }
 
 }
