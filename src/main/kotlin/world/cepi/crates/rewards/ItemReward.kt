@@ -10,11 +10,25 @@ import world.cepi.itemextension.item.Item
 import world.cepi.itemextension.item.itemSerializationModule
 import world.cepi.itemextension.item.traits.list.NameTrait
 import world.cepi.kstom.command.arguments.annotations.DefaultNumber
+import world.cepi.kstom.command.arguments.annotations.MaxAmount
+import world.cepi.kstom.command.arguments.annotations.MinAmount
 import world.cepi.kstom.item.get
+import java.util.concurrent.ThreadLocalRandom
 
-class ItemReward(val item: Item, @DefaultNumber(1.0) val amount: Int): Reward {
+class ItemReward(
+    val item: Item,
+
+    @MinAmount(0.0)
+    @MaxAmount(1.0)
+    @DefaultNumber(1.0)
+    val chance: Double,
+
+    @DefaultNumber(1.0)
+    val amount: Int
+): Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
+        ThreadLocalRandom.current().nextDouble(1.0) < chance
         target.inventory.addItemStack(item.renderItem(amount))
 
         return generateComponent()
@@ -22,7 +36,7 @@ class ItemReward(val item: Item, @DefaultNumber(1.0) val amount: Int): Reward {
     }
 
     override fun generateComponent(): Component {
-        return Component.text("$amount ${item.get<NameTrait>()?.name ?: "Item"}!")
+        return Component.text("$amount ${item.get<NameTrait>()?.name ?: "Item"} ($chance%)!")
             .hoverEvent(item.renderItem(amount).asHoverEvent())
     }
 
@@ -31,9 +45,11 @@ class ItemReward(val item: Item, @DefaultNumber(1.0) val amount: Int): Reward {
 
             val player = sender as? Player ?: return null
 
+            val chance = args[0] as? Double ?: return null
+
             val item = player.itemInMainHand.meta.get<Item>(Item.key, itemSerializationModule) ?: return null
 
-            return ItemReward(item, player.itemInMainHand.amount)
+            return ItemReward(item, chance, player.itemInMainHand.amount)
         }
     }
 
