@@ -12,6 +12,7 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.block.CustomBlock
 import net.minestom.server.particle.Particle
+import net.minestom.server.particle.ParticleCreator
 import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
@@ -54,7 +55,28 @@ object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
     }
 
     override fun onDestroy(instance: Instance, position: BlockPosition, data: Data?) {
+        val particleX = position.x + .5
+        val particleY = position.y + .5
+        val particleZ = position.z + .5
+        val flashParticle = ParticleCreator.createParticlePacket(Particle.FLASH, particleX, particleY, particleZ, .5f, .5f, .5f, 1)
+        val explosionParticle = ParticleCreator.createParticlePacket(Particle.EXPLOSION, particleX, particleY, particleZ, .5f, .5f, .5f, 1)
+        val cloudParticle = ParticleCreator.createParticlePacket(Particle.CLOUD, particleX, particleY, particleZ, .5f, .5f, .5f, 10)
+
+        instance.players.forEach {
+            if (position.getDistanceSquared(it.position.toBlockPosition()) <= 100) {
+                it.playerConnection.sendPacket(flashParticle)
+                it.playerConnection.sendPacket(explosionParticle)
+                it.playerConnection.sendPacket(cloudParticle)
+            }
+        }
+
+        instance.playSound(Sound.sound(SoundEvent.FIREWORK_ROCKET_BLAST, Sound.Source.MASTER, .8f, 1f), particleX, particleY, particleZ)
+        instance.playSound(Sound.sound(SoundEvent.FIREWORK_ROCKET_TWINKLE, Sound.Source.MASTER, 1f, 1f), particleX, particleY, particleZ)
+        instance.playSound(Sound.sound(SoundEvent.GENERIC_EXPLODE, Sound.Source.MASTER, .3f, 1f), particleX, particleY, particleZ)
+
+
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
+        println(breakingMap)
 
         breakingMap[position]?.keys?.forEach {
             val (x, y, z) = position
@@ -109,6 +131,11 @@ object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
 //            data.set("anim", 10)
 //        } else
 //            data.set("anim", data.get<Int>("anim")!! - 0)
+        val particle = ParticleCreator.createParticlePacket(Particle.CRIT, blockPosition.x + .5, blockPosition.y + .5, blockPosition.z + .5, .5f, .5f, .5f, 10)
+        instance.players.forEach {
+            if (blockPosition.getDistanceSquared(it.position.toBlockPosition()) <= 100)
+                it.playerConnection.sendPacket(particle)
+        }
 
         if (breakingMap[blockPosition] == null) breakingMap[blockPosition] = Object2IntOpenHashMap()
         val internalMap = breakingMap[blockPosition]!!
