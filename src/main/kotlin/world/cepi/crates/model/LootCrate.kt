@@ -18,21 +18,24 @@ data class LootCrate(
     val rewards: MutableList<Reward> = mutableListOf(),
     private val lootCrateMeta: MutableList<LootCrateMeta> = mutableListOf()
 ) {
-
-    fun <T: LootCrateMeta> putMeta(meta: T): Boolean {
-        return if (lootCrateMeta.any { it::class == meta::class }) false
-        else {
+    /**
+     * returns if the meta already existed the old one
+     */
+    @Suppress("unchecked_cast")
+    fun <T : LootCrateMeta> putMeta(meta: T): T? {
+        val previous = lootCrateMeta.firstOrNull { it::class == meta::class }
+        if (previous == null) {
             lootCrateMeta.add(meta)
-            true
+            return null
         }
+        lootCrateMeta[lootCrateMeta.indexOf(previous)] = meta
+        return previous as T
     }
 
     fun applyMeta(data: Data) = lootCrateMeta.forEach { it.apply(data) }
 
-    fun toItem(): ItemStack = ItemStack.of(Material.CHEST).with {
-
-        it.meta { meta ->
-
+    fun toItem(): ItemStack = ItemStack.builder(Material.CHEST)
+        .meta { meta ->
             meta.displayName("<gradient:yellow:gold>Loot Crate".asMini().decoration(TextDecoration.ITALIC, false))
 
             meta.lore(
@@ -45,7 +48,7 @@ data class LootCrate(
 
             meta.set(Tag.String(lootKey), name)
         }
-    }
+        .build()
 
 
     companion object {
