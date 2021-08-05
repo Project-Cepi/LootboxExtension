@@ -22,12 +22,12 @@ import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
 import world.cepi.kstom.util.component3
 
-object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
-
+object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
     private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
 
     override fun onPlace(instance: Instance, blockPosition: BlockPosition, data: Data?) {
-        if (data!!.hasKey("block")) instance.refreshBlockStateId(blockPosition, data.get<Short>("block")!!)
+        if (data == null) return
+        if (data.hasKey("block")) instance.refreshBlockStateId(blockPosition, data.get<Short>("block")!!)
     }
 
     override fun enableMultiPlayerBreaking() = true
@@ -40,29 +40,30 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
         stage: Byte,
         breakers: MutableSet<Player>?
     ): Int {
-
         player.playSound(Sound.sound(
             SoundEvent.NOTE_BLOCK_PLING,
             Sound.Source.PLAYER,
             1f,
-            .5f + (.15f * stage)
+            noteBlockPitches[stage.toInt()]
         ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
 
-        return 20
+        val data = player.instance?.getBlockData(position)
+        return if (data?.hasKey("ticks") == true)
+            data.get<Int>("ticks")!!
+        else 20
     }
 
     override fun onDestroy(instance: Instance, position: BlockPosition, data: Data?) {
         val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
 
         breakingMap[position]?.keys?.forEach {
-
             val (x, y, z) = position
 
             it.playSound(Sound.sound(
                 SoundEvent.NOTE_BLOCK_PLING,
                 Sound.Source.PLAYER,
                 1f,
-                2f
+                1.41f // g"
             ), x.toDouble(), y.toDouble(), z.toDouble())
 
             if (loot.rewards.isNotEmpty())
@@ -125,4 +126,9 @@ object LootCrateBlock: CustomBlock(Block.CHEST, LootCrate.lootKey) {
             internalMap[player] = data?.get<Int>("ticks") ?: 20
         }
     }
+
+    // Notes g' -> e"
+    // 0.5*2^(<Note Block clicks>/12)
+    // source: https://www.reddit.com/r/Minecraft/comments/1hazq2/table_and_formula_to_convert_note_block_clicks/
+    private val noteBlockPitches = floatArrayOf(0.71f, 0.75f, 0.79f, 0.84f, 0.89f, 0.94f, 1.0f, 1.06f, 1.12f, 1.19f)
 }
