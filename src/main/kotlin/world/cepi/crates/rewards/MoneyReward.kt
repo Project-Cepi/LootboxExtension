@@ -32,16 +32,4 @@ class MoneyReward(val money: IntRange) : Reward {
             .append(Component.space())
             .append(Component.text("Coins", NamedTextColor.GRAY))
     }
-
-    companion object: RewardGenerator<MoneyReward> {
-        override fun generateReward(sender: CommandSender, args: List<Any>): MoneyReward? {
-
-            if (args.isEmpty()) return null
-
-            val intRange = args[0] as? IntRange ?: return null
-
-            return MoneyReward(intRange)
-
-        }
-    }
 }

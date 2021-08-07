@@ -7,7 +7,7 @@ import world.cepi.crates.commands.LootCrateCommand
 import world.cepi.crates.rewards.Reward
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.argumentsFromFunction
+import world.cepi.kstom.command.arguments.generation.generateSyntaxes
 import world.cepi.kstom.command.arguments.literal
 import kotlin.reflect.full.primaryConstructor
 
@@ -15,28 +15,21 @@ internal object RewardSubcommand : Command("reward") {
 
     init {
 
-        Reward.rewards.forEach { rewardPair ->
+        Reward.rewards.forEach { reward ->
 
-            val reward = rewardPair.key
-            val generator = rewardPair.value
+            val arguments = generateSyntaxes(reward)
 
-            val arguments = argumentsFromFunction(reward.primaryConstructor ?: return@forEach)
-                .filterNotNull()
+            arguments.callback = {
+                sender.sendFormattedTranslatableMessage("lootcrate", "reward.invalid")
+            }
 
-            addSyntax(
+            arguments.applySyntax(this,
                 LootCrateCommand.existingLootCrate,
-                reward.simpleName!!.dropLast("Reward".length).lowercase().literal(),
-                *arguments.toTypedArray()
-            ) {
+                reward.simpleName!!.dropLast("Reward".length).lowercase().literal()
+            ) { instance ->
                 val crate = context[LootCrateCommand.existingLootCrate]
-                val constructorArgs: List<Any> = arguments.map { arg -> context[arg] }
 
-                val generatedReward = generator.generateReward(sender, constructorArgs) ?: run {
-                    sender.sendFormattedTranslatableMessage("lootcrate", "reward.invalid")
-                    return@addSyntax
-                }
-
-                crate.rewards.add(generatedReward)
+                crate.rewards.add(instance)
 
                 sender.sendFormattedTranslatableMessage(
                     "lootcrate",

@@ -16,16 +16,4 @@ class TeleportReward(val relativeVec: RelativeVec): Reward {
         return generateComponent()
     }
 
-    companion object: RewardGenerator<TeleportReward> {
-        override fun generateReward(sender: CommandSender, args: List<Any>): TeleportReward? {
-
-            if (args.isEmpty()) return null
-
-            val relativeVec = args[0] as? RelativeVec ?: return null
-
-            return TeleportReward(relativeVec)
-
-        }
-    }
-
 }

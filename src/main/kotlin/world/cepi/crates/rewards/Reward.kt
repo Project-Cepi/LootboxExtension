@@ -21,8 +21,6 @@ sealed interface Reward {
 
     companion object {
 
-        val rewards =
-            Reward::class.sealedSubclasses
-                .associateWith { it.companionObjectInstance as RewardGenerator<*> }
+        val rewards = Reward::class.sealedSubclasses
     }
 }

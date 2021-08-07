@@ -7,15 +7,18 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.utils.BlockPosition
 import world.cepi.crates.model.LootCrate
 import world.cepi.itemextension.item.Item
+import world.cepi.itemextension.item.context.ItemContextParser
 import world.cepi.itemextension.item.itemSerializationModule
 import world.cepi.itemextension.item.traits.list.NameTrait
-import world.cepi.kstom.command.arguments.annotations.DefaultNumber
-import world.cepi.kstom.command.arguments.annotations.MaxAmount
-import world.cepi.kstom.command.arguments.annotations.MinAmount
+import world.cepi.kstom.command.arguments.generation.annotations.DefaultNumber
+import world.cepi.kstom.command.arguments.generation.annotations.MaxAmount
+import world.cepi.kstom.command.arguments.generation.annotations.MinAmount
+import world.cepi.kstom.command.arguments.generation.annotations.ParameterContext
 import world.cepi.kstom.item.get
 import java.util.concurrent.ThreadLocalRandom
 
 class ItemReward(
+    @ParameterContext(ItemContextParser::class)
     val item: Item,
 
     @MinAmount(0.0)
@@ -24,7 +27,7 @@ class ItemReward(
     val chance: Double,
 
     @DefaultNumber(1.0)
-    val amount: Int
+    private val amount: Int
 ): Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
@@ -38,19 +41,6 @@ class ItemReward(
     override fun generateComponent(): Component {
         return Component.text("$amount ${item.get<NameTrait>()?.name ?: "Item"} ($chance%)!")
             .hoverEvent(item.renderItem(amount).asHoverEvent())
-    }
-
-    companion object: RewardGenerator<ItemReward> {
-        override fun generateReward(sender: CommandSender, args: List<Any>): ItemReward? {
-
-            val player = sender as? Player ?: return null
-
-            val chance = args[0] as? Double ?: return null
-
-            val item = player.itemInMainHand.meta.get<Item>(Item.key, itemSerializationModule) ?: return null
-
-            return ItemReward(item, chance, player.itemInMainHand.amount)
-        }
     }
 
 }

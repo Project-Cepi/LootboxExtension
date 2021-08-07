@@ -32,16 +32,4 @@ class XPReward(val xp: IntRange) : Reward {
             .append(Component.space())
             .append(Component.text("XP", NamedTextColor.GRAY))
     }
-
-    companion object: RewardGenerator<XPReward> {
-        override fun generateReward(sender: CommandSender, args: List<Any>): XPReward? {
-
-            if (args.isEmpty()) return null
-
-            val intRange = args[0] as? IntRange ?: return null
-
-            return XPReward(intRange)
-
-        }
-    }
 }
