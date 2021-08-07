@@ -16,8 +16,6 @@ import net.minestom.server.particle.ParticleCreator
 import net.minestom.server.sound.SoundEvent
 import net.minestom.server.utils.BlockPosition
 import net.minestom.server.utils.time.TimeUnit
-import net.minestom.server.utils.time.UpdateOption
-import org.apache.logging.log4j.util.Strings
 import world.cepi.kstom.Manager
 import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
