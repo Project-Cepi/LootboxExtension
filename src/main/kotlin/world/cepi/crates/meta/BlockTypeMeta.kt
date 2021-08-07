@@ -3,7 +3,7 @@ package world.cepi.crates.meta
 import kotlinx.serialization.Serializable
 import net.minestom.server.data.Data
 import net.minestom.server.instance.block.Block
-import world.cepi.kstom.command.arguments.annotations.DefaultBlock
+import world.cepi.kstom.command.arguments.generation.annotations.DefaultBlock
 
 @Serializable
 class BlockTypeMeta(

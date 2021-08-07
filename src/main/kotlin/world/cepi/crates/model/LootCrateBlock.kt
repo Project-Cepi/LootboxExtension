@@ -22,6 +22,7 @@ import world.cepi.kstom.Manager
 import world.cepi.kstom.util.component1
 import world.cepi.kstom.util.component2
 import world.cepi.kstom.util.component3
+import java.time.Duration
 
 object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
     private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
@@ -120,8 +121,8 @@ object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
         return LootCrate.blockID
     }
 
-    override fun getUpdateOption(): UpdateOption {
-        return UpdateOption(1, TimeUnit.TICK)
+    override fun getUpdateFrequency(): Duration? {
+        return Duration.of(1, TimeUnit.SERVER_TICK)
     }
 
     override fun update(instance: Instance, blockPosition: BlockPosition, data: Data?) {
