@@ -32,16 +32,16 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Minestom:Minestom:b9864a1a28")
+    compileOnly("com.github.Minestom:Minestom:748b24b8ef")
 
     // Get KStom
-    compileOnly("com.github.Project-Cepi:KStom:77c5229b47")
+    compileOnly("com.github.Project-Cepi:KStom:86f5b6a506")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:c31304d5dd")
+    compileOnly("com.github.Project-Cepi:Kepi:310b350848")
 
     // Add support for level rewards
     compileOnly("com.github.Project-Cepi:LevelExtension:cfcbcd8bf7")

@@ -1,157 +1,134 @@
 package world.cepi.crates.model
 
-import it.unimi.dsi.fastutil.objects.Object2IntMap
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
 import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import net.minestom.server.data.Data
-import net.minestom.server.entity.Player
-import net.minestom.server.instance.Instance
-import net.minestom.server.instance.block.Block
-import net.minestom.server.instance.block.CustomBlock
+import net.minestom.server.instance.block.BlockHandler
 import net.minestom.server.particle.Particle
 import net.minestom.server.particle.ParticleCreator
 import net.minestom.server.sound.SoundEvent
-import net.minestom.server.utils.BlockPosition
-import net.minestom.server.utils.time.TimeUnit
+import net.minestom.server.utils.NamespaceID
 import world.cepi.kstom.Manager
-import world.cepi.kstom.util.component1
-import world.cepi.kstom.util.component2
-import world.cepi.kstom.util.component3
-import java.time.Duration
+import world.cepi.kstom.item.get
+import world.cepi.kstom.serializer.UUIDSerializer
+import world.cepi.kstom.util.playSound
 
-object LootCrateBlock : CustomBlock(Block.CHEST, LootCrate.lootKey) {
-    private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
+object LootCrateBlock : BlockHandler {
 
-    override fun onPlace(instance: Instance, blockPosition: BlockPosition, data: Data?) {
-        if (data == null) return
-        if (data.hasKey("block")) instance.refreshBlockStateId(blockPosition, data.get<Short>("block")!!)
-    }
+    val mapSerializer = MapSerializer(UUIDSerializer, Long.serializer())
 
-    override fun enableMultiPlayerBreaking() = true
+//    private val breakingMap: MutableMap<BlockPosition, Object2IntMap<Player>> = mutableMapOf()
+//
+//    override fun enableMultiPlayerBreaking() = true
+//
+//    override fun enableCustomBreakDelay() = true
+//
+//    override fun getBreakDelay(
+//        player: Player,
+//        position: BlockPosition,
+//        stage: Byte,
+//        breakers: MutableSet<Player>?
+//    ): Int {
+//        player.playSound(Sound.sound(
+//            SoundEvent.BLOCK_NOTE_BLOCK_PLING,
+//            Sound.Source.PLAYER,
+//            1f,
+//            noteBlockPitches[stage.toInt()]
+//        ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
+//
+//        val data = player.instance?.getBlockData(position)
+//        return if (data?.hasKey("ticks") == true)
+//            data.get<Int>("ticks")!!
+//        else 20
+//    }
 
-    override fun enableCustomBreakDelay() = true
-
-    override fun getBreakDelay(
-        player: Player,
-        position: BlockPosition,
-        stage: Byte,
-        breakers: MutableSet<Player>?
-    ): Int {
-        player.playSound(Sound.sound(
-            SoundEvent.NOTE_BLOCK_PLING,
-            Sound.Source.PLAYER,
-            1f,
-            noteBlockPitches[stage.toInt()]
-        ), position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
-
-        val data = player.instance?.getBlockData(position)
-        return if (data?.hasKey("ticks") == true)
-            data.get<Int>("ticks")!!
-        else 20
-    }
-
-    override fun onDestroy(instance: Instance, position: BlockPosition, data: Data?) {
-        val particleX = position.x + .5
-        val particleY = position.y + .5
-        val particleZ = position.z + .5
+    override fun onDestroy(destroy: BlockHandler.Destroy): Unit = with(destroy) {
+        val particleX = blockPosition.x() + .5
+        val particleY = blockPosition.y() + .5
+        val particleZ = blockPosition.z() + .5
         val flashParticle = ParticleCreator.createParticlePacket(Particle.FLASH, particleX, particleY, particleZ, .5f, .5f, .5f, 1)
         val explosionParticle = ParticleCreator.createParticlePacket(Particle.EXPLOSION, particleX, particleY, particleZ, .5f, .5f, .5f, 1)
         val cloudParticle = ParticleCreator.createParticlePacket(Particle.CLOUD, particleX, particleY, particleZ, .5f, .5f, .5f, 10)
 
-        instance.players.forEach {
-            if (position.getDistanceSquared(it.position.toBlockPosition()) <= 100) {
-                it.playerConnection.sendPacket(flashParticle)
-                it.playerConnection.sendPacket(explosionParticle)
-                it.playerConnection.sendPacket(cloudParticle)
-            }
+        instance.getChunkAt(blockPosition)?.viewers?.forEach {
+            it.playerConnection.sendPacket(flashParticle)
+            it.playerConnection.sendPacket(explosionParticle)
+            it.playerConnection.sendPacket(cloudParticle)
         }
 
-        instance.playSound(Sound.sound(SoundEvent.FIREWORK_ROCKET_BLAST, Sound.Source.MASTER, .8f, 1f), particleX, particleY, particleZ)
-        instance.playSound(Sound.sound(SoundEvent.FIREWORK_ROCKET_TWINKLE, Sound.Source.MASTER, 1f, 1f), particleX, particleY, particleZ)
-        instance.playSound(Sound.sound(SoundEvent.GENERIC_EXPLODE, Sound.Source.MASTER, .3f, 1f), particleX, particleY, particleZ)
+        instance.playSound(Sound.sound(SoundEvent.ENTITY_FIREWORK_ROCKET_BLAST, Sound.Source.MASTER, .8f, 1f), particleX, particleY, particleZ)
+        instance.playSound(Sound.sound(SoundEvent.ENTITY_FIREWORK_ROCKET_TWINKLE, Sound.Source.MASTER, 1f, 1f), particleX, particleY, particleZ)
+        instance.playSound(Sound.sound(SoundEvent.ENTITY_GENERIC_EXPLODE, Sound.Source.MASTER, .3f, 1f), particleX, particleY, particleZ)
 
 
-        val loot = data?.get<LootCrate>(LootCrate.lootKey) ?: return
-        println(breakingMap)
+        val loot = block.get<LootCrate>(LootCrate.lootKey) ?: return
 
-        breakingMap[position]?.keys?.forEach {
-            val (x, y, z) = position
+        // TODO re-implement block breaking
+        // block.get("map", serializer = mapSerializer)?.keys?
 
-            it.playSound(Sound.sound(
-                SoundEvent.NOTE_BLOCK_PLING,
+        if (destroy !is BlockHandler.PlayerDestroy) return
+
+        arrayOf(destroy.player).forEach { player ->
+            player.playSound(Sound.sound(
+                SoundEvent.BLOCK_NOTE_BLOCK_PLING,
                 Sound.Source.PLAYER,
                 1f,
                 1.41f // g"
-            ), x.toDouble(), y.toDouble(), z.toDouble())
+            ), blockPosition)
 
             if (loot.rewards.isNotEmpty())
-                it.sendMessage(Component.text("Loot crate opened: ", NamedTextColor.GREEN))
-        }
+                player.sendMessage(
+                    Component.text("Loot crate opened: ", NamedTextColor.GREEN)
+                )
 
-        loot.rewards.forEach { reward ->
-            breakingMap[position]?.forEach {
+            loot.rewards.forEach { reward ->
                 val message = try {
-                    reward.dispatch(it.key, loot, instance, position)
+                    reward.dispatch(
+                        player,
+                        loot, instance, blockPosition
+                    )
                 } catch (exception: Exception) {
                     Manager.exception.handleException(exception)
-                    Component.text("An internal error occured", NamedTextColor.RED)
+                    Component.text("An internal error occurred", NamedTextColor.RED)
                 }
 
                 if (message != Component.empty()) {
-                    it.key.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
-                        .append(Component.space())
-                        .append(message.color(NamedTextColor.GRAY)))
+                    player.sendMessage(Component.text("-", NamedTextColor.DARK_GRAY)
+                            .append(Component.space())
+                            .append(message.color(NamedTextColor.GRAY)))
                 }
             }
         }
-
-        breakingMap.remove(position)
     }
 
-    override fun onInteract(player: Player, hand: Player.Hand, blockPosition: BlockPosition, data: Data?): Boolean {
-        return false
-    }
+    override fun tick(tick: BlockHandler.Tick) = with(tick) {
 
-    override fun getCustomBlockId(): Short {
-        return LootCrate.blockID
-    }
-
-    override fun getUpdateFrequency(): Duration? {
-        return Duration.of(1, TimeUnit.SERVER_TICK)
-    }
-
-    override fun update(instance: Instance, blockPosition: BlockPosition, data: Data?) {
-
-        // TODO cool particle at top
-//        if (data!!.get<Int>("anim") ?: 0 == 0) {
-//            data.set("anim", 10)
-//        } else
-//            data.set("anim", data.get<Int>("anim")!! - 0)
-        val particle = ParticleCreator.createParticlePacket(Particle.CRIT, blockPosition.x + .5, blockPosition.y + .5, blockPosition.z + .5, .5f, .5f, .5f, 10)
+        val particle = ParticleCreator.createParticlePacket(
+            Particle.CRIT,
+            blockPosition.x() + .5, blockPosition.y() + .5, blockPosition.z() + .5,
+            .5f, .5f, .5f, 10
+        )
         instance.players.forEach {
-            if (blockPosition.getDistanceSquared(it.position.toBlockPosition()) <= 100)
+            if (blockPosition.distanceSquared(it.position) <= 100)
                 it.playerConnection.sendPacket(particle)
         }
 
-        if (breakingMap[blockPosition] == null) breakingMap[blockPosition] = Object2IntOpenHashMap()
-        val internalMap = breakingMap[blockPosition]!!
-
-        breakingMap[blockPosition]!!.forEach {
-            if (it.value - 1 <= 0) {
-                breakingMap[blockPosition]?.removeInt(it.key)
-                return@forEach
-            }
-
-            breakingMap[blockPosition]?.set(it.key, it.value - 1)
-        }
-
-        getBreakers(instance, blockPosition)?.forEach { player ->
-            internalMap[player] = data?.get<Int>("ticks") ?: 20
-        }
+//        block.get("map", serializer = mapSerializer)?.toMutableMap()?.mapNotNull {
+//            if (it.value - 1 <= 0) {
+//                return@mapNotNull null
+//            }
+//
+//            it.key to it.value - 1
+//        }.let { block.withTag("map", serializer = mapSerializer) }
+//
+//        getBreakers(instance, blockPosition)?.forEach { player ->
+//            internalMap[player] = data?.get<Int>("ticks") ?: 20
+//        }
     }
+
+    override fun getNamespaceId(): NamespaceID = NamespaceID.from("cepi:loot_crate")
 
     // Notes g' -> e"
     // 0.5*2^(<Note Block clicks>/12)

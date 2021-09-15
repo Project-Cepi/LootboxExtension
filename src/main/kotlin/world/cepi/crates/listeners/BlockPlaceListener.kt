@@ -7,8 +7,8 @@ import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
+import world.cepi.crates.model.LootCrateBlock
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kstom.data.data
 
 fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
 
@@ -17,13 +17,9 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
     val lootcrateName = item.meta.getTag(Tag.String(LootCrate.lootKey)) ?: return
 
     if (item.material == Material.CHEST) {
-        setCustomBlock(LootCrate.lootKey)
+        block = block.withHandler(LootCrateBlock)
 
         val crate = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return
-
-        val data = data {
-            this[LootCrate.lootKey] = crate
-        }
 
         crate.applyMeta(data)
 

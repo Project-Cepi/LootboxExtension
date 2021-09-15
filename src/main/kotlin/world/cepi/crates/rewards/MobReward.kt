@@ -11,7 +11,9 @@ import world.cepi.mob.arguments.MobMainHandContextParser
 import world.cepi.mob.mob.Mob
 import world.cepi.mob.mob.mobEgg
 
-class MobReward(@ParameterContext(MobMainHandContextParser::class) val mob: Mob) : Reward {
+class MobReward(
+    @ParameterContext(MobMainHandContextParser::class) val mob: Mob
+) : Reward {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
         val creature = mob.generateMob() ?: return Component.empty()

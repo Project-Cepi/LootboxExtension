@@ -16,8 +16,6 @@ class LootboxExtension : Extension() {
 
         eventNode.listenOnly(::onBlockPlace)
 
-        Manager.block.registerCustomBlock(LootCrateBlock)
-
         LootCrateCommand.register()
 
         logger.info("[CratesExtension] has been enabled!")
