@@ -10,9 +10,9 @@ import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 
 internal object MetaSubcommand: KepiMetaSubcommand<LootCrateMeta>(
     LootCrateMeta::class,
-    "meta",
-    "meta",
-    { instance, name ->
+    dropString = "meta",
+    name = "meta",
+    addLambda = { instance, name ->
         val crate = context[LootCrateCommand.existingLootCrate]
 
         crate.putMeta(instance)
@@ -23,7 +23,7 @@ internal object MetaSubcommand: KepiMetaSubcommand<LootCrateMeta>(
         )
     },
 
-    { clazz, name ->
+    removeLambda =  { clazz, name ->
         val crate = context[LootCrateCommand.existingLootCrate]
 
         // TODO remove meta
