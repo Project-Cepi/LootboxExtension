@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.minestom.server.data.Data
+import net.minestom.server.instance.block.Block
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
@@ -32,7 +33,7 @@ data class LootCrate(
         return previous as T
     }
 
-    fun applyMeta(data: Data) = lootCrateMeta.forEach { it.apply(data) }
+    fun applyMeta(block: Block): Block = lootCrateMeta.fold(block) { foldedBlock, meta -> meta.apply(foldedBlock) }
 
     fun toItem(): ItemStack = ItemStack.builder(Material.CHEST)
         .meta { meta ->

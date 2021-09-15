@@ -21,13 +21,11 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
 
         val crate = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return
 
-        crate.applyMeta(data)
-
-        blockData = data
+        block = crate.applyMeta(block)
 
         player.sendFormattedTranslatableMessage(
             "lootcrate", "place",
-            Component.text(data.get<LootCrate>(LootCrate.lootKey)!!.name, NamedTextColor.BLUE)
+            Component.text(crate.name, NamedTextColor.BLUE)
         )
     }
 }

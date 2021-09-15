@@ -1,14 +1,12 @@
 package world.cepi.crates.rewards
 
 import net.kyori.adventure.text.Component
-import net.minestom.server.command.CommandSender
+import net.minestom.server.coordinate.Point
 import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
-import net.minestom.server.utils.BlockPosition
 import world.cepi.crates.model.LootCrate
 import world.cepi.itemextension.item.Item
 import world.cepi.itemextension.item.context.ItemContextParser
-import world.cepi.itemextension.item.itemSerializationModule
 import world.cepi.itemextension.item.traits.list.NameTrait
 import world.cepi.kstom.command.arguments.generation.annotations.DefaultNumber
 import world.cepi.kstom.command.arguments.generation.annotations.MaxAmount
@@ -30,7 +28,7 @@ class ItemReward(
     private val amount: Int
 ): Reward {
 
-    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: BlockPosition): Component {
+    override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: Point): Component {
         ThreadLocalRandom.current().nextDouble(1.0) < chance
         target.inventory.addItemStack(item.renderItem(amount))
 
