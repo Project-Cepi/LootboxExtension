@@ -1,5 +1,6 @@
 package world.cepi.crates.rewards
 
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.coordinate.Point
@@ -8,8 +9,13 @@ import net.minestom.server.instance.Instance
 import net.minestom.server.utils.math.IntRange
 import world.cepi.crates.model.LootCrate
 import world.cepi.economy.EconomyHandler
+import world.cepi.kstom.serializer.IntRangeSerializer
 
-class MoneyReward(val money: IntRange) : Reward {
+@Serializable
+class MoneyReward(
+    @Serializable(with = IntRangeSerializer::class)
+    val money: IntRange
+) : Reward() {
 
     override fun dispatch(
         target: Player,

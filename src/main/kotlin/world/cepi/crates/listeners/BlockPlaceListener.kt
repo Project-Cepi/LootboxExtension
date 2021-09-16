@@ -9,6 +9,7 @@ import world.cepi.crates.LootboxExtension
 import world.cepi.crates.model.LootCrate
 import world.cepi.crates.model.LootCrateBlock
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
+import world.cepi.kstom.item.with
 
 fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
 
@@ -22,6 +23,8 @@ fun onBlockPlace(event: PlayerBlockPlaceEvent) = with(event) {
         val crate = LootboxExtension.crates.firstOrNull { it.name == lootcrateName } ?: return
 
         block = crate.applyMeta(block)
+
+        block = block.with(LootCrate.lootKey, item = crate)
 
         player.sendFormattedTranslatableMessage(
             "lootcrate", "place",

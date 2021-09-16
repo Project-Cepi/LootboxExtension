@@ -1,5 +1,6 @@
 package world.cepi.crates.rewards
 
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.coordinate.Point
@@ -8,11 +9,12 @@ import net.minestom.server.entity.Player
 import net.minestom.server.instance.Instance
 import world.cepi.crates.model.LootCrate
 
-sealed interface Reward {
+@Serializable
+sealed class Reward {
 
-    fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: Point): Component
+    abstract fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: Point): Component
 
-    fun generateComponent(): Component = Component.empty()
+    open fun generateComponent(): Component = Component.empty()
 
     val formattedComponent: Component
         get() = Component.text("-", NamedTextColor.DARK_GRAY)

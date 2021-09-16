@@ -1,5 +1,6 @@
 package world.cepi.crates.rewards
 
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.minestom.server.coordinate.Point
 import net.minestom.server.entity.Player
@@ -12,9 +13,9 @@ import world.cepi.kstom.command.arguments.generation.annotations.DefaultNumber
 import world.cepi.kstom.command.arguments.generation.annotations.MaxAmount
 import world.cepi.kstom.command.arguments.generation.annotations.MinAmount
 import world.cepi.kstom.command.arguments.generation.annotations.ParameterContext
-import world.cepi.kstom.item.get
 import java.util.concurrent.ThreadLocalRandom
 
+@Serializable
 class ItemReward(
     @ParameterContext(ItemContextParser::class)
     val item: Item,
@@ -26,7 +27,7 @@ class ItemReward(
 
     @DefaultNumber(1.0)
     private val amount: Int
-): Reward {
+): Reward() {
 
     override fun dispatch(target: Player, lootcrate: LootCrate, instance: Instance, position: Point): Component {
         ThreadLocalRandom.current().nextDouble(1.0) < chance
