@@ -1,9 +1,9 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:world.cepi.crates.commands////PointingToDeclaration/-crates-extension/world.cepi.crates.commands/index.html
+$dokka.location:world.cepi.crates.commands//existingLootCrate/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/existing-loot-crate.html
+$dokka.location:world.cepi.crates.commands//possibleLootCrateName/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/possible-loot-crate-name.html
 $dokka.location:world.cepi.crates.commands/LootCrateCommand///PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-loot-crate-command/index.html
-$dokka.location:world.cepi.crates.commands/LootCrateCommand/existingLootCrate/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-loot-crate-command/existing-loot-crate.html
-$dokka.location:world.cepi.crates.commands/LootCrateCommand/name/#/PointingToDeclaration/-crates-extension/world.cepi.crates.commands/-loot-crate-command/name.html
 $dokka.location:world.cepi.crates.listeners////PointingToDeclaration/-crates-extension/world.cepi.crates.listeners/index.html
 $dokka.location:world.cepi.crates.listeners//onBlockPlace/#net.minestom.server.event.player.PlayerBlockPlaceEvent/PointingToDeclaration/-crates-extension/world.cepi.crates.listeners/on-block-place.html
 $dokka.location:world.cepi.crates.meta////PointingToDeclaration/-crates-extension/world.cepi.crates.meta/index.html
