@@ -56,7 +56,7 @@ dependencies {
     compileOnly("com.github.Project-Cepi:EconomyExtension:c4bc1b2484")
 
     // Use the JUpiter test library.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
 }
 
 tasks.withType<KotlinCompile> {
